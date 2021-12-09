@@ -8,13 +8,13 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { AnimatePresence } from "framer-motion";
 
 // Load fonts
-import '../styles/globals.css'
 import '@fontsource/open-sans';
 import '@fontsource/open-sans/600.css';
 import '@fontsource/open-sans/700.css';
 import '@fontsource/satisfy';
 
 // Import css
+import '@styles/globals.css'
 import '@styles/tailwind.css';
 
 function handleExitComplete() {
