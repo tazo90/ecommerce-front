@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Hydrate } from 'react-query/hydration';
 import { ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools'
+// import { ReactQueryDevtools } from 'react-query/devtools'
 import { AnimatePresence } from "framer-motion";
 
 // Load fonts
@@ -45,7 +45,7 @@ function App({ Component, pageProps }: AppProps) {
             <ToastContainer />      
           </Layout>
         </Hydrate>
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </AnimatePresence>
   );

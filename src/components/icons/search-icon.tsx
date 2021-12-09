@@ -1,4 +1,4 @@
-const SearchIcon = ({
+export const SearchIcon = ({
 	color = "currentColor",
 	width = "17px",
 	height = "18px",
@@ -22,4 +22,3 @@ const SearchIcon = ({
 	);
 };
 
-export default SearchIcon;

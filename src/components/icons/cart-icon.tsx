@@ -1,4 +1,4 @@
-const CartIcon = ({
+export const CartIcon = ({
 	color = "currentColor",
 	width = "18px",
 	height = "18px",
@@ -21,5 +21,3 @@ const CartIcon = ({
 		</svg>
 	);
 };
-
-export default CartIcon;

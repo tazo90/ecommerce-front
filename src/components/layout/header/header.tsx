@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import dynamic from 'next/dynamic';
 
-import SearchIcon from '@components/icons/search-icon';
+import { SearchIcon } from '@components/icons';
 import HeaderMenu from './header-menu';
 import { siteSettings } from "@settings/site.settings";
 import Logo from '@components/ui/logo';

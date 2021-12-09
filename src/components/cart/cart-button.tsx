@@ -1,4 +1,4 @@
-import CartIcon from '@components/icons/cart-icon';
+import { CartIcon } from '@components/icons';
 
 function CartButton() {
   return (

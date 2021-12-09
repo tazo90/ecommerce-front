@@ -1,6 +1,6 @@
 import Header from '@components/layout/header/header';
 // import Footer from '@components//layout/footer/footer';
-// import MobileNavigation from '@components/layout/mobile-navigation';
+import MobileNavigation from "@components/layout/mobile-navigation/mobile-navigation";
 
 interface LayoutProps {
   children?: any;
@@ -19,6 +19,7 @@ function Layout({ children }: LayoutProps) {
       >
         {children}
       </main>
+      <MobileNavigation />
     </div>
   )
 }
