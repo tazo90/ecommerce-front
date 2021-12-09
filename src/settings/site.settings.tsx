@@ -14,42 +14,22 @@ export const siteSettings = {
 			{
 				id: 1,
 				path: "/",
-				label: "menu-demos",
+				label: "Pages",
 				subMenu: [
 					{
 						id: 1,
-						path: "/",
-						label: "menu-modern",
+						path: "/kfc",
+						label: "KFC",
 					},
 					{
 						id: 2,
-						path: "/standard",
-						label: "menu-standard",
+						path: "/ph",
+						label: "Pizza Hut",
 					},
 					{
 						id: 3,
-						path: "/minimal",
-						label: "menu-minimal",
-					},
-					{
-						id: 4,
-						path: "/vintage",
-						label: "menu-vintage",
-					},
-					{
-						id: 5,
-						path: "/classic",
-						label: "menu-classic",
-					},
-					{
-						id: 6,
-						path: "/trendy",
-						label: "menu-trendy",
-					},
-					{
-						id: 7,
-						path: "/kfc",
-						label: "menu-kfc",
+						path: "/bk",
+						label: "Burger King",
 					},
 				],
 			},

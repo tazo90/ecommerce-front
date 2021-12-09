@@ -3,6 +3,7 @@ import { FaChevronDown } from 'react-icons/fa';
 
 import Link from '@components/ui/link';
 import ListMenu from '@components/ui/list-menu';
+import MegaMenu from '@components/ui/mega-menu';
 
 interface MenuProps {
   data: any;
@@ -30,6 +31,10 @@ function HeaderMenu({ data, className }: MenuProps) {
               </span> 
             )}
           </Link>
+
+          {item?.columns && Array.isArray(item.columns) && (
+            <MegaMenu columns={item.columns} />
+          )}
 
           {item?.subMenu && Array.isArray(item.subMenu) && (
             <div className="subMenu shadow-header bg-gray-200 absolute start-0 opacity-0 group-hover:opacity-100">
