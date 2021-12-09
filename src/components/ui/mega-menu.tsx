@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import Image from 'next/image';
 import Link from '@components/ui/link';
 
@@ -39,10 +40,10 @@ function MegaMenu({ columns }: MegaMenuProps) {
                   <li
                     key={item.id}
                     className={
-											columnItem?.columnItemItems?.length === item.id
-												? "border-b border-gray-300 pb-3.5 mb-3"
-												: ""
-										}
+                      cn({
+                        'border-b border-gray-300 pb-3.5 mb-3': columnItem?.columnItemItems?.length === item.id
+                      })
+                    }	
                   >
                     <div className="flex flex-row items-center">
                       {item.image &&
@@ -56,7 +57,7 @@ function MegaMenu({ columns }: MegaMenuProps) {
                       }
                       <Link
                         href={item.path}
-                        className="text-body text-sm block py-1.5 px-5 xl:px-8 2xl:px-20 hover:text-heading hover:bg-gray-300"
+                        className="text-body text-sm block py-1.5 px-5 hover:text-heading hover:bg-gray-300"
                       >
                         {item.label}
                       </Link>
