@@ -5,6 +5,7 @@ import {
   HomeIcon
 } from '@components/icons';
 import Link from '@components/ui/link';
+import { Drawer } from '@components/common/drawer/drawer';
 
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
@@ -34,6 +35,17 @@ function BottomNavigation() {
         </Link>
         <CartButton />
       </div>
+      <Drawer
+        placement={"left"}
+        open={false}
+        onClose={() => {}}
+        handler={false}
+        showMask={true}
+        level={null}
+        contentWrapperStyle={{ left: 0 }}
+      >
+        Menu
+      </Drawer>
     </>
   )
 }
