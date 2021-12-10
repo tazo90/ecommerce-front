@@ -43,37 +43,57 @@ export const siteSettings = {
 						columnItems: [
 							{
 								id: 1,
-								path: "/menu?cat=kubelki",
-								label: "Kubełki",
+								path: "/menu?cat=wrappers",
+								label: "Wrappers",
 								columnItemItems: [
 									{
 										id: 1,
-										path: "/search?q=strips",
-										label: "Strips",
+										path: "/search?q=hot-harrisa",
+										label: "Hot Harrisa",
 										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-kubelki_30_strips.png'
 									},
 									{
 										id: 2,
-										path: "/search?q=bestsellery",
-										label: "Bestsellery",
+										path: "/search?q=smoky",
+										label: "Smoky BBQ",
 										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-classic.png'
 									},
 									{
 										id: 3,
-										path: "/search?q=classic",
-										label: "Classic",
+										path: "/search?q=kentucky",
+										label: "Kentucky Gold",
 										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-classic.png'
 									},
 								],
 							},
 							{
 								id: 2,
-								path: "/search?q=belt-scarves",
-								label: "menu-belt-scarves",
+								path: "/menu?cat=shakes",
+								label: "Shakes",
+								columnItemItems: [
+									{
+										id: 1,
+										path: "/search?q=hot-harrisa",
+										label: "Hot Harrisa",
+										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-kubelki_30_strips.png'
+									},
+									{
+										id: 2,
+										path: "/search?q=smoky",
+										label: "Smoky BBQ",
+										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-classic.png'
+									},
+									{
+										id: 3,
+										path: "/search?q=kentucky",
+										label: "Kentucky Gold",
+										image: 'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/kubelki/nowe/kubelki_4os-classic.png'
+									},
+								],
 							},
 							{
 								id: 3,
-								path: "/search?q=watches-wearables",
+								path: "/search?cat=z-ryzem",
 								label: "menu-watches-wearables",
 							},
 						],

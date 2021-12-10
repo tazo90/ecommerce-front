@@ -29,14 +29,14 @@
       "@containers/*": [
         "src/containers/*"
       ],
-      "@contexts/*": [
-        "src/contexts/*"
-      ],
       "@framework/*": [
         "src/framework/basic-rest/*"
       ],
       "@settings/*": [
         "src/settings/*"
+      ],
+      "@slices/*": [
+        "src/slices/*"
       ],
       "@styles/*": [
         "src/styles/*"
