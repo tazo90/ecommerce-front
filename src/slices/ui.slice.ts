@@ -3,14 +3,12 @@ import { getToken } from '@framework/utils/get-token';
 
 export interface UIState {
   isAuthorized: boolean;
-  displaySidebar: boolean;
   displayFilter: boolean;
-  displayModal: boolean;
   displayCart: boolean;
   displaySearch: boolean;
+  drawerView: DRAWER_VIEWS;
   modalView: MODAL_VIEWS;
   modalData: any;
-  drawerView: DRAWER_VIEWS;
   toastText: ToastText;
 }
 
@@ -18,19 +16,18 @@ type MODAL_VIEWS =
   | "SIGN_UP_VIEW"
   | "LOGIN_VIEW"
   | "FORGET_PASSWORD"
-  | "PRODUCT_VIEW";
+  | "PRODUCT_VIEW"
+  | null;
 type DRAWER_VIEWS = "CART_SIDEBAR" | "MOBILE_MENU" | null;
 type ToastText = string;
 
 export const initialState: UIState = {
   isAuthorized: getToken() ? true : false,
-  displaySidebar: false,
   displayFilter: false,
-  displayModal: false,
   displayCart: false,
   displaySearch: false,
-  modalView: "LOGIN_VIEW",
   drawerView: null,
+  modalView: null,
   modalData: null,
   toastText: "",
 }
@@ -40,18 +37,13 @@ const uiSlice = createSlice({
   initialState,
   reducers: {
     authorize: (state) => { state.isAuthorized = true },
-    unauthorize: (state) => { state.isAuthorized = false },
-    openSidebar: (state) => { state.displaySidebar = true },
-    closeSidebar: (state) => { state.displaySidebar = false },
-    toggleSidebar: (state) => { state.displaySidebar = !state.displaySidebar },
+    unauthorize: (state) => { state.isAuthorized = false },    
     openCart: (state) => { state.displayCart = true },
     closeCart: (state) => { state.displayCart = false },
     toggleCart: (state) => { state.displayCart = !state.displayCart },
     
     openFilter: (state) => { state.displayFilter = true },
-    closeFilter: (state) => { state.displayFilter = false },
-    openModal: (state) => { state.displayModal = true },
-    closeModal: (state) => { state.displayModal = false },
+    closeFilter: (state) => { state.displayFilter = false },    
     openSearch: (state) => { state.displaySearch = true },
     closeSearch: (state) => { state.displaySearch = false },
 
@@ -64,16 +56,11 @@ const uiSlice = createSlice({
 export const { 
   authorize,
   unauthorize,
-  openSidebar,
-  closeSidebar,
-  toggleSidebar,
   openCart,
   closeCart,
   toggleCart,
   openFilter,
   closeFilter,
-  openModal,
-  closeModal,
   openSearch,
   closeSearch,
   setModalView,

@@ -15,7 +15,9 @@ import '@fontsource/open-sans/700.css';
 import '@fontsource/satisfy';
 
 // Import css
-import '@styles/globals.css'
+import '@styles/globals.css';
+import '@styles/scrollbar.css';
+import '@styles/plugins.css';
 import '@styles/tailwind.css';
 
 import store from '../store';

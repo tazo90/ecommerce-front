@@ -1,3 +1,4 @@
+import Search from '@components/common/search';
 import Header from '@components/layout/header/header';
 // import Footer from '@components//layout/footer/footer';
 import MobileNavigation from "@components/layout/mobile-navigation/mobile-navigation";
@@ -20,6 +21,7 @@ function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <MobileNavigation />
+      <Search />
     </div>
   )
 }

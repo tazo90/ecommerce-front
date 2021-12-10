@@ -1,0 +1,22 @@
+/* Drawer */
+.drawer .drawer-content-wrapper {
+  @apply w-full sm:w-450px;
+}
+.drawer-search {
+  transform: translate(-50%, 50px);
+}
+.drawer-search.open {
+  @apply fixed block visible opacity-100;
+  transform: translate(-50%, 0);
+}
+.overlay {
+	@apply w-full h-full flex fixed opacity-0 top-0 start-0;
+	background-color: rgba(0, 0, 0, 0.35);
+	z-index: 21;
+	visibility: hidden;
+	transition: 0.35s ease-in-out;
+}
+.overlay.open {
+	@apply opacity-100;
+	visibility: visible;
+}

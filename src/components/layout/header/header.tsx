@@ -1,10 +1,15 @@
 import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
-
 import { SearchIcon } from '@components/icons';
 import HeaderMenu from './header-menu';
 import { siteSettings } from "@settings/site.settings";
 import Logo from '@components/ui/logo';
+import { 
+  setModalView, 
+  setDrawerView,
+  openSearch,
+} from '@slices/ui.slice';
 
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false
@@ -15,26 +20,17 @@ type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { siteHeader } = siteSettings;
 
 function Header() {
-  // const {
-  //   openSidebar,
-  //   setDrawerView,
-  //   openSearch,
-  //   openModal,
-  //   setModalView,
-  //   isAuthorized
-  // } = useUI();
-
+  const dispatch = useDispatch();
+  const { displaySearch } = useSelector((state) => state.ui);
   const siteHeaderRef = useRef() as DivElementRef;
 
-  // function handleLogin() {
-  //   setModalView("LOGIN_VIEW");
-  //   return openModal();
-  // }
+  function handleLogin() {
+    dispatch(setModalView("LOGIN_VIEW"));
+  }
 
-  // function handleMobileMenu() {
-  //   setDrawerView("MOBILE_MENU");
-  //   return openSidebar();
-  // }
+  function handleMobileMenu() {
+    dispatch(setDrawerView("MOBILE_MENU"));
+  }
 
   return (
     <header
@@ -47,7 +43,7 @@ function Header() {
           <button
             aria-label="Menu"
             className="menuBtn hidden md:flex lg:hidden flex-col items-center justify-center px-5 2xl:px-7 flex-shrink-0 h-full outline-none focus:outline-none"
-            // onClick={handleMobileMenu}
+            onClick={handleMobileMenu}
           >
             <span className="menuIcon">
               <span className="bar" />
@@ -65,7 +61,7 @@ function Header() {
           <div className="hidden md:flex justify-end items-center space-s-6 lg:space-s-5 xl:space-s-8 2xl:space-s-10 ms-auto flex-shrink-0">
             <button
               className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none transform"
-              // onClick={openSearch}
+              onClick={() => dispatch(openSearch())}
               aria-label="search-button"
             >
               <SearchIcon />

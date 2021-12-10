@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import dynamic from 'next/dynamic';
 import { 
   SearchIcon,
@@ -6,6 +7,7 @@ import {
 } from '@components/icons';
 import Link from '@components/ui/link';
 import { Drawer } from '@components/common/drawer/drawer';
+import { openSearch } from '@slices/ui.slice';
 
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
@@ -13,6 +15,8 @@ const CartButton = dynamic(() => import('@components/cart/cart-button'), {
 // const MobileMenu = dynamic(() => import('@components/layout/header/header-menu'));
 
 function BottomNavigation() {
+  const dispatch = useDispatch();
+  
   return (
     <>
       <div className="md:hidden fixed z-10 bottom-0 flex items-center justify-between shadow-bottomNavigation text-gray-700 body-font bg-white w-full h-14 sm:h-16 px-6">
@@ -25,7 +29,7 @@ function BottomNavigation() {
         </button>
         <button
           className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none"
-          // onClick={openSearch}
+          onClick={() => dispatch(openSearch())}
           aria-label="search-button"
         >
           <SearchIcon />
