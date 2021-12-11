@@ -91,6 +91,28 @@
 		@apply top-full;
 	}
 
+	/* Mobile Drawer Menu */
+	.mobileMenu .menu-item.active {
+		@apply text-black font-semibold;
+	}
+	.mobileMenu .menu-item.active::before {
+		content: "";
+		width: 3px;
+		@apply flex absolute h-full bg-heading top-0 start-0 bottom-0;
+	}
+	.mobileMenu li li {
+		@apply text-body text-sm;
+	}
+	.mobileMenu li li div > a {
+		@apply relative py-2.5 text-body;
+	}
+	.mobileMenu li > ul > li > div > a:before {
+		content: "";
+		height: 1px;
+		@apply flex absolute bg-body top-1/2 start-1.5 md:start-3 w-1.5 md:w-2;
+	}
+
+	/* Cart */
   .cart-counter-badge {
 		min-width: 20px;
 		min-height: 20px;
