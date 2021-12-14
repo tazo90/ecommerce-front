@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Link from "@components/ui/link";
-import Scrollbar from '@components/common/scrollbar';
-import Logo from '@components/ui/logo';
-import { siteSettings } from '@settings/site.settings';
-import { setDrawerView } from '@slices/ui.slice';
-import { IoIosArrowDown } from 'react-icons/io';
-import { IoClose } from 'react-icons/io5';
+import Scrollbar from "@components/common/scrollbar";
+import Logo from "@components/ui/logo";
+import { siteSettings } from "@settings/site.settings";
+import { setDrawerView } from "@slices/ui.slice";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 export default function MobileMenu() {
   const dispatch = useDispatch();
   const [activeMenus, setActiveMenus] = useState([]);
   const { siteHeader } = siteSettings;
-  
+
   function handleArrowClick(menuName: string) {
     const newActiveMenus = [...activeMenus];
 
@@ -33,18 +33,18 @@ export default function MobileMenu() {
   }
 
   function ListMenu({
-		dept,
-		data,
-		hasSubMenu,
-		menuName,
-		menuIndex,
-		className = "",
-	}: any) {
+    dept,
+    data,
+    hasSubMenu,
+    menuName,
+    menuIndex,
+    className = "",
+  }: any) {
     if (!data.label) {
       return null;
     }
 
-    return (      
+    return (
       <li className={`mb-0.5 ${className}`}>
         <div className="flex items-center justify-between">
           <Link
@@ -78,9 +78,9 @@ export default function MobileMenu() {
         )}
       </li>
     );
-  };
+  }
 
-  function SubMenu({ dept, data, toggle, menuIndex}: any) {
+  function SubMenu({ dept, data, toggle, menuIndex }: any) {
     if (!toggle) {
       return null;
     }
@@ -93,19 +93,19 @@ export default function MobileMenu() {
           const menuName: string = `sidebar-submenu-${dept}-${menuIndex}-${index}`;
 
           return (
-            <ListMenu 
+            <ListMenu
               dept={dept}
               data={menu}
               hasSubMenu={menu.subMenu}
               menuName={menuName}
               key={menuName}
               menuIndex={index}
-              className={dept > 1 && 'ps-4'}
+              className={dept > 1 && "ps-4"}
             />
-          )
+          );
         })}
       </ul>
-    )
+    );
   }
 
   return (
@@ -139,12 +139,12 @@ export default function MobileMenu() {
                     key={menuName}
                     menuIndex={index}
                   />
-                )
+                );
               })}
             </ul>
           </div>
         </Scrollbar>
       </div>
     </>
-  )
+  );
 }

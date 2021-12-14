@@ -1,25 +1,26 @@
-import { useDispatch, useSelector } from 'react-redux';
-import dynamic from 'next/dynamic';
-import { 
-  SearchIcon,
-  MenuIcon,
-  HomeIcon
-} from '@components/icons';
-import Link from '@components/ui/link';
-import { Drawer } from '@components/common/drawer/drawer';
-import { openSearch, setDrawerView } from '@slices/ui.slice';
+import { useDispatch, useSelector } from "react-redux";
+import dynamic from "next/dynamic";
+import { SearchIcon, MenuIcon, HomeIcon } from "@components/icons";
+import Link from "@components/ui/link";
+import { Drawer } from "@components/common/drawer/drawer";
+import { openSearch, setDrawerView } from "@slices/ui.slice";
 
-const CartButton = dynamic(() => import('@components/cart/cart-button'), {
+const CartButton = dynamic(() => import("@components/cart/cart-button"), {
   ssr: false,
-})
-const MobileMenu = dynamic(() => import('@components/layout/header/mobile-menu'));
+});
+const MobileMenu = dynamic(
+  () => import("@components/layout/header/mobile-menu")
+);
+const MobileMenuModern = dynamic(
+  () => import("@components/layout/header/mobile-menu-modern")
+);
 
 function BottomNavigation() {
   const dispatch = useDispatch();
   const { drawerView } = useSelector((state) => state.ui);
 
   function handleMobileMenu() {
-    dispatch(setDrawerView('MOBILE_MENU'));
+    dispatch(setDrawerView("MOBILE_MENU"));
   }
 
   return (
@@ -46,17 +47,19 @@ function BottomNavigation() {
       </div>
       <Drawer
         placement={"left"}
-        open={drawerView === 'MOBILE_MENU'}
+        open={drawerView === "MOBILE_MENU"}
         onClose={() => dispatch(setDrawerView(null))}
         handler={false}
         showMask={true}
         level={null}
+        width="85%"
         contentWrapperStyle={{ left: 0 }}
       >
-        <MobileMenu />
+        {/* <MobileMenu /> */}
+        <MobileMenuModern sidebarOpen={drawerView === "MOBILE_MENU"} />
       </Drawer>
     </>
-  )
+  );
 }
 
 export default BottomNavigation;
