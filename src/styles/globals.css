@@ -14,3 +14,32 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Animations */
+@keyframes moveSideBar {
+  0% {
+    transform: translateX(-420px);
+    z-index: 100;
+  }
+  100% {
+    transform: translateX(-0px);
+  }
+}
+
+@keyframes moveSubMenu {
+  0% {
+    transform: translateX(420px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes moveMenu {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-420px);
+  }
+}

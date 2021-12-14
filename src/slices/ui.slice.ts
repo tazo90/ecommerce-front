@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getToken } from '@framework/utils/get-token';
+import { createSlice } from "@reduxjs/toolkit";
+import { getToken } from "@framework/utils/get-token";
 
 export interface UIState {
   isAuthorized: boolean;
@@ -10,6 +10,7 @@ export interface UIState {
   modalView: MODAL_VIEWS;
   modalData: any;
   toastText: ToastText;
+  sidebarSubItems: any;
 }
 
 type MODAL_VIEWS =
@@ -30,30 +31,58 @@ export const initialState: UIState = {
   modalView: null,
   modalData: null,
   toastText: "",
-}
+  sidebarSubItems: null,
+};
 
 const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
-    authorize: (state) => { state.isAuthorized = true },
-    unauthorize: (state) => { state.isAuthorized = false },    
-    openCart: (state) => { state.displayCart = true },
-    closeCart: (state) => { state.displayCart = false },
-    toggleCart: (state) => { state.displayCart = !state.displayCart },
-    
-    openFilter: (state) => { state.displayFilter = true },
-    closeFilter: (state) => { state.displayFilter = false },    
-    openSearch: (state) => { state.displaySearch = true },
-    closeSearch: (state) => { state.displaySearch = false },
+    authorize: (state) => {
+      state.isAuthorized = true;
+    },
+    unauthorize: (state) => {
+      state.isAuthorized = false;
+    },
+    openCart: (state) => {
+      state.displayCart = true;
+    },
+    closeCart: (state) => {
+      state.displayCart = false;
+    },
+    toggleCart: (state) => {
+      state.displayCart = !state.displayCart;
+    },
 
-    setModalView: (state, action) => { state.modalView = action.payload },
-    setDrawerView: (state, action) => { state.drawerView = action.payload },
-    setModalData: (state, action) => { state.modalData = action.payload },
-  }
-})
+    openFilter: (state) => {
+      state.displayFilter = true;
+    },
+    closeFilter: (state) => {
+      state.displayFilter = false;
+    },
+    openSearch: (state) => {
+      state.displaySearch = true;
+    },
+    closeSearch: (state) => {
+      state.displaySearch = false;
+    },
 
-export const { 
+    setModalView: (state, action) => {
+      state.modalView = action.payload;
+    },
+    setDrawerView: (state, action) => {
+      state.drawerView = action.payload;
+    },
+    setModalData: (state, action) => {
+      state.modalData = action.payload;
+    },
+    setSidebarSubItems: (state, action) => {
+      state.sidebarSubItems = action.payload;
+    },
+  },
+});
+
+export const {
   authorize,
   unauthorize,
   openCart,
@@ -66,6 +95,7 @@ export const {
   setModalView,
   setDrawerView,
   setModalData,
+  setSidebarSubItems,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
