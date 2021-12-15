@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Transition } from "react-transition-group";
 import Image from "next/image";
-import Link from "@components/ui/link";
+import { Transition } from "react-transition-group";
 import Logo from "@components/ui/logo";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { setDrawerView, setSidebarSubItems } from "@slices/ui.slice";
-import { siteSettings } from "@settings/site.settings";
+import { setCategoryProducts } from "@slices/category.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
+import { capitalize } from "lodash";
 
 function getAnimationStyle(state: string, cssAnimatinoClass: string) {
   if (state === "entering") {
@@ -19,7 +19,7 @@ function getAnimationStyle(state: string, cssAnimatinoClass: string) {
   return { animation: `${cssAnimatinoClass} .15s reverse backwards` };
 }
 
-function Menu({ state }) {
+function Menu({ state, categories }) {
   const dispatch = useDispatch();
   let style;
 
@@ -28,13 +28,6 @@ function Menu({ state }) {
   } else if (state === "entering") {
     style = { animation: "moveMenu .25s reverse backwards" };
   }
-
-  // TODO: Move it to containers/categories-block
-  const { data, isLoading, error } = useCategoriesQuery({
-    limit: 8,
-  });
-
-  console.log("DATA", data?.categories);
 
   function handleCloseMenu() {
     dispatch(setDrawerView(null));
@@ -100,9 +93,12 @@ function Menu({ state }) {
         </div>
       </div>
 
-      {data?.categories?.map((category) => {
+      {categories?.map((category) => {
+        const categoryItems =
+          category.subCategories || Object.values(category.products);
+
         return (
-          <div className="flex items-center pl-4">
+          <div className="flex items-center pl-4" key={category.id}>
             <Image
               src={category.img}
               width={70}
@@ -113,54 +109,34 @@ function Menu({ state }) {
             <MenuItem
               key={category.id}
               text={category.name}
-              items={category.subCategories}
+              items={categoryItems}
             />
           </div>
         );
       })}
-
-      {/* {data?.categories?.map((category) => (
-        <div key={category.id}>
-          <div className="flex items-center">
-            <div className="font-bold px-6 pt-2 text-lg">{category.name}</div>
-            <Image
-              src={category.img}
-              width={50}
-              height={50}
-              quality={100}
-              className="object-cover"
-            />
-          </div>
-          {category.subCategories?.map((subCategory) => {
-            if (subCategory) {
-              return (
-                <MenuItem
-                  key={subCategory.id}
-                  text={subCategory.name}
-                  items={category.subCategories}
-                />
-              );
-            }
-            return (
-              <Link href="/" className="w-full">
-                <span className="py-2 px-6 block w-full">
-                  {subCategory.name}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      ))} */}
     </div>
   );
 }
 
 function SubMenu({ state }) {
   const dispatch = useDispatch();
-  const { sidebarSubItems } = useSelector((state) => state.ui);
-  const style = getAnimationStyle(state, "moveSubMenu");
+  const { sidebarSubItems, categoryProducts } = useSelector((state) => {
+    return {
+      sidebarSubItems: state.ui.sidebarSubItems,
+      categoryProducts: state.category.categoryProducts,
+    };
+  });
 
-  console.log("SUB", sidebarSubItems);
+  const style = getAnimationStyle(state, "moveSubMenu");
+  const currentMenu = sidebarSubItems?.slice(-1)[0];
+  const previousMenu =
+    sidebarSubItems?.length > 1 ? sidebarSubItems?.slice(-2)[0] : null;
+
+  function handleMenuBack() {
+    dispatch(setSidebarSubItems(previousMenu ? [previousMenu] : null));
+  }
+
+  console.log("CURR MENU", currentMenu);
 
   return (
     <div
@@ -169,41 +145,57 @@ function SubMenu({ state }) {
     >
       <div
         className="flex flex-row h-16 items-center px-4 border-b border-gray-300 border-b-2"
-        onClick={() => dispatch(setSidebarSubItems(null))}
+        onClick={() => handleMenuBack()}
       >
         <>
           <IoIosArrowBack className="text-[20px]" />
-          <span className="pl-2 font-bold">Main Menu</span>
+          <span className="pl-2 font-bold">
+            {previousMenu?.label || "Main Menu"}
+          </span>
         </>
       </div>
-      <div className="font-bold px-6 py-4 text-lg">
-        {sidebarSubItems?.label}
-      </div>
-      {sidebarSubItems?.items.map((item) => (
-        <div className="flex items-center pl-4">
-          <Image
-            src={item.media[1].url}
-            width={70}
-            height={70}
-            quality={100}
-            className="object-cover"
-          />
-          <MenuItem key={item.id} text={item.name} items={[]} />
-        </div>
-      ))}
+      <div className="font-bold px-6 py-4 text-lg">{currentMenu?.label}</div>
+      {currentMenu?.items.map((item) => {
+        return (
+          <div className="flex items-center pl-4" key={item.id}>
+            <Image
+              src={item.img ?? item.media[1].url}
+              width={70}
+              height={70}
+              quality={100}
+              className="object-cover"
+            />
+            <MenuItem
+              key={item.id}
+              text={item.name}
+              items={categoryProducts[item.id]}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function MenuItem({ text, items }) {
   const dispatch = useDispatch();
+  const { sidebarSubItems } = useSelector((state) => state.ui);
 
   const openRow = () => {
-    const subItems = {
+    const currentMenu = {
       label: text,
       items,
     };
-    dispatch(setSidebarSubItems(subItems));
+
+    let stackedMenus;
+    if (sidebarSubItems === null) {
+      stackedMenus = [currentMenu];
+    } else {
+      stackedMenus = [...sidebarSubItems];
+      stackedMenus.push(currentMenu);
+    }
+
+    dispatch(setSidebarSubItems(stackedMenus));
   };
 
   return (
@@ -211,7 +203,7 @@ function MenuItem({ text, items }) {
       className="flex justify-between items-center w-full py-5 pl-6 pr-4"
       onClick={() => openRow()}
     >
-      <div className="uppercase text-sm font-semibold">{text}</div>
+      <div className="text-sm font-semibold">{capitalize(text)}</div>
       <IoIosArrowForward />
     </div>
   );
@@ -220,6 +212,26 @@ function MenuItem({ text, items }) {
 export default function MobileMenuModern({ sidebarOpen }) {
   const dispatch = useDispatch();
   const { sidebarSubItems } = useSelector((state) => state.ui);
+
+  // TODO: Move it to containers/categories-block
+  const { data, isLoading, error } = useCategoriesQuery();
+
+  useEffect(() => {
+    const categoryProducts = {};
+    data?.categories.map((category) => {
+      Object.values(category.products).map((product) => {
+        product.subCategoryId?.map((categoryId) => {
+          if (categoryProducts.hasOwnProperty(categoryId)) {
+            categoryProducts[categoryId].push(product);
+          } else {
+            categoryProducts[categoryId] = [product];
+          }
+        });
+      });
+    });
+
+    dispatch(setCategoryProducts(categoryProducts));
+  }, [data]);
 
   function displayMenu(state) {
     const style = getAnimationStyle(state, "moveSideBar");
@@ -232,7 +244,7 @@ export default function MobileMenuModern({ sidebarOpen }) {
           unmountOnExit
           mountOnEnter
         >
-          {(state) => <Menu state={state} />}
+          {(state) => <Menu state={state} categories={data?.categories} />}
         </Transition>
         <Transition
           in={sidebarSubItems !== null}
