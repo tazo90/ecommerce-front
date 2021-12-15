@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Transition } from "react-transition-group";
 import Logo from "@components/ui/logo";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { setDrawerView, setSidebarSubItems } from "@slices/ui.slice";
 import { setCategoryProducts } from "@slices/category.slice";
+import { setCurrentProduct } from "@slices/product.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
-import { capitalize } from "lodash";
+import { capitalize, lowerCase } from "lodash";
 
 function getAnimationStyle(state: string, cssAnimatinoClass: string) {
   if (state === "entering") {
@@ -19,22 +21,15 @@ function getAnimationStyle(state: string, cssAnimatinoClass: string) {
   return { animation: `${cssAnimatinoClass} .15s reverse backwards` };
 }
 
-function Menu({ state, categories }) {
+function MenuHeader() {
   const dispatch = useDispatch();
-  let style;
-
-  if (state === "exiting") {
-    style = { animation: "moveMenu .25s forwards" };
-  } else if (state === "entering") {
-    style = { animation: "moveMenu .25s reverse backwards" };
-  }
 
   function handleCloseMenu() {
     dispatch(setDrawerView(null));
   }
 
-  function displayHeader() {
-    return (
+  return (
+    <>
       <div className="w-full h-14 border-b border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 pl-4">
         <Logo />
 
@@ -46,15 +41,6 @@ function Menu({ state, categories }) {
           <IoClose className="text-black mt-1 md:mt-0.5" />
         </button>
       </div>
-    );
-  }
-
-  return (
-    <div
-      className="flex flex-col justify-between w-full h-full overflow-y-scroll"
-      style={style}
-    >
-      {displayHeader()}
 
       <div className="flex items-center justify-between px-2 py-2 border-b border-gray-300 border-b-2">
         <div className="flex border-r border-gray-300 border-r-2 pr-2">
@@ -92,6 +78,25 @@ function Menu({ state, categories }) {
           />
         </div>
       </div>
+    </>
+  );
+}
+
+function Menu({ state, categories }) {
+  let style;
+
+  if (state === "exiting") {
+    style = { animation: "moveMenu .25s forwards" };
+  } else if (state === "entering") {
+    style = { animation: "moveMenu .25s reverse backwards" };
+  }
+
+  return (
+    <div
+      className="flex flex-col justify-between w-full h-full overflow-y-scroll"
+      style={style}
+    >
+      <MenuHeader />
 
       {categories?.map((category) => {
         const categoryItems =
@@ -110,6 +115,7 @@ function Menu({ state, categories }) {
               key={category.id}
               text={category.name}
               items={categoryItems}
+              isProduct={false}
             />
           </div>
         );
@@ -119,6 +125,7 @@ function Menu({ state, categories }) {
 }
 
 function SubMenu({ state }) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { sidebarSubItems, categoryProducts } = useSelector((state) => {
     return {
@@ -136,7 +143,14 @@ function SubMenu({ state }) {
     dispatch(setSidebarSubItems(previousMenu ? [previousMenu] : null));
   }
 
-  console.log("CURR MENU", currentMenu);
+  function handleProductClick(product) {
+    if (!product.price) return;
+
+    dispatch(setCurrentProduct(product));
+
+    const productSlug = lowerCase(product.name).replaceAll(" ", "-");
+    router.push(`/products/${productSlug}`);
+  }
 
   return (
     <div
@@ -150,14 +164,23 @@ function SubMenu({ state }) {
         <>
           <IoIosArrowBack className="text-[20px]" />
           <span className="pl-2 font-bold">
-            {previousMenu?.label || "Main Menu"}
+            {capitalize(previousMenu?.label) || "Main Menu"}
           </span>
         </>
       </div>
-      <div className="font-bold px-6 py-4 text-lg">{currentMenu?.label}</div>
-      {currentMenu?.items.map((item) => {
+      <div className="uppercase font-bold px-6 py-4 text-lg">
+        {currentMenu?.label}
+      </div>
+
+      {currentMenu?.items?.map((item) => {
+        const isProduct = item.price !== undefined;
+
         return (
-          <div className="flex items-center pl-4" key={item.id}>
+          <div
+            className="flex items-center pl-4"
+            onClick={() => handleProductClick(item)}
+            key={item.id}
+          >
             <Image
               src={item.img ?? item.media[1].url}
               width={70}
@@ -169,6 +192,7 @@ function SubMenu({ state }) {
               key={item.id}
               text={item.name}
               items={categoryProducts[item.id]}
+              isProduct={isProduct}
             />
           </div>
         );
@@ -177,7 +201,7 @@ function SubMenu({ state }) {
   );
 }
 
-function MenuItem({ text, items }) {
+function MenuItem({ text, items, isProduct }) {
   const dispatch = useDispatch();
   const { sidebarSubItems } = useSelector((state) => state.ui);
 
@@ -204,7 +228,7 @@ function MenuItem({ text, items }) {
       onClick={() => openRow()}
     >
       <div className="text-sm font-semibold">{capitalize(text)}</div>
-      <IoIosArrowForward />
+      {!isProduct && <IoIosArrowForward />}
     </div>
   );
 }
