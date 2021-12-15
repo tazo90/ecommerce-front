@@ -1,3 +1,3 @@
 export const API_ENDPOINTS = {
-  CATEGORIES: '/categories',
+  CATEGORIES: "/categories.json",
 };

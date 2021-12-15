@@ -1,6 +1,10 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['amrestcdn.azureedge.net'],
+    domains: [
+      'kfc.pl',
+      'amrestcdn.azureedge.net', 
+      'sawepecomcdn.blob.core.windows.net'
+    ],
   },
 }
