@@ -149,7 +149,7 @@ function SubMenu({ state }) {
     dispatch(setCurrentProduct(product));
 
     const productSlug = lowerCase(product.name).replaceAll(" ", "-");
-    router.push(`/products/${productSlug}`);
+    router.push(`/order/${productSlug}-${product.id}`);
   }
 
   return (

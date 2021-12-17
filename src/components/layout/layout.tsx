@@ -1,5 +1,5 @@
-import Search from '@components/common/search';
-import Header from '@components/layout/header/header';
+import Search from "@components/common/search";
+import Header from "@components/layout/header/header";
 // import Footer from '@components//layout/footer/footer';
 import MobileNavigation from "@components/layout/mobile-navigation/mobile-navigation";
 
@@ -10,7 +10,7 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <MobileNavigation top />
       <main
         className="relative flex-grow"
         style={{
@@ -20,10 +20,9 @@ function Layout({ children }: LayoutProps) {
       >
         {children}
       </main>
-      <MobileNavigation />
       <Search />
     </div>
-  )
+  );
 }
 
 export default Layout;

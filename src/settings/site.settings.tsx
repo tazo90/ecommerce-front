@@ -414,11 +414,11 @@ export const siteSettings = {
   description: "Test",
   defaultLanguage: "en",
   logo: {
-    url: "/assets/images/kfc_logo.jpg",
+    url: "/assets/images/kfc-logo-mobile.svg",
     alt: "KFC",
     href: "/",
-    width: 46,
-    height: 46,
+    width: 70,
+    height: 70,
   },
   siteHeader: {
     menu,

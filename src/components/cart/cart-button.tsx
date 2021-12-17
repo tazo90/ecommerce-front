@@ -1,4 +1,4 @@
-import { CartIcon } from '@components/icons';
+import { IoCartOutline } from "react-icons/io5";
 
 function CartButton() {
   return (
@@ -7,13 +7,12 @@ function CartButton() {
       // onClick={handleCartOpen}
       aria-label="cart-button"
     >
-      <CartIcon />
-      <span className="cart-counter-badge flex items-center justify-center bg-heading text-white absolute -top-2.5 xl:-top-3 -end-2.5 xl:-end-3 rounded-full font-bold">
+      <IoCartOutline className="text-3xl" />
+      <span className="cart-counter-badge flex items-center justify-center bg-heading text-white absolute -top-1 xl:-top-3 -end-2.5 xl:-end-3 rounded-full font-bold">
         10
       </span>
-
     </button>
-  )
+  );
 }
 
 export default CartButton;
