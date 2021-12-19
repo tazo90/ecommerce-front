@@ -107,19 +107,16 @@ function MenuHeader({ withBack = true, showDelivery = false }) {
 }
 
 function Menu({ state, categories }) {
-  let style;
-
-  if (state === "exiting") {
-    style = { animation: "moveMenu .25s forwards" };
-  } else if (state === "entering") {
-    style = { animation: "moveMenu .25s reverse backwards" };
-  }
-  // const style = getAnimationStyle(state, "moveSubMenu");
+  const transitionStyles: any = {
+    exiting: { animation: "moveMenu .25s reverse backwards" },
+    entering: { animation: "moveMenu .25s forwards" },
+    entered: { transform: "translateX(0)" },
+  };
 
   return (
     <div
-      className="flex flex-col absolute w-full h-full overflow-y-scroll"
-      style={style}
+      className="flex flex-col absolute w-full h-full overflow-y-scroll translate-x-[420px]"
+      style={transitionStyles[state]}
     >
       <MenuHeader />
 
@@ -292,14 +289,11 @@ function MenuIntro({ state }) {
     },
   ];
 
-  // const style = getAnimationStyle(state, "moveIntro");
-  let style;
-
-  if (state === "exiting") {
-    style = { animation: "moveIntro .25s reverse backwards" };
-  } else if (state === "entering") {
-    style = { animation: "moveIntro .25s forwards" };
-  }
+  const transitionStyles: any = {
+    exiting: { animation: "moveIntro .25s forwards" },
+    entering: { animation: "moveIntro .25s reverse backwards" },
+    exited: { transform: "translateX(-420px)" },
+  };
 
   const boxClasses =
     "flex items-center justify-between my-3 mx-4 px-4 h-30 bg-gray-200 font-medium text-sm";
@@ -307,7 +301,7 @@ function MenuIntro({ state }) {
   return (
     <div
       className="flex flex-col justify-between w-full h-full overflow-y-scroll"
-      style={style}
+      style={transitionStyles[state]}
     >
       <MenuHeader withBack={false} />
 
