@@ -3,6 +3,7 @@ module.exports = {
   images: {
     domains: [
       'kfc.pl',
+      'static.kfc.es',
       'amrestcdn.azureedge.net', 
       'sawepecomcdn.blob.core.windows.net'
     ],

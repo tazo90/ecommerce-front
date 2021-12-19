@@ -4,9 +4,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Transition } from "react-transition-group";
 import Logo from "@components/ui/logo";
+import Link from "@components/ui/link";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { setDrawerView, setSidebarSubItems } from "@slices/ui.slice";
+import {
+  setDrawerView,
+  setSidebarSubItems,
+  setMenuView,
+} from "@slices/ui.slice";
 import { setCategoryProducts } from "@slices/category.slice";
 import { setCurrentProduct } from "@slices/product.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
@@ -21,16 +26,33 @@ function getAnimationStyle(state: string, cssAnimatinoClass: string) {
   return { animation: `${cssAnimatinoClass} .15s reverse backwards` };
 }
 
-function MenuHeader() {
+function MenuHeader({ withBack = true, showDelivery = false }) {
   const dispatch = useDispatch();
 
   function handleCloseMenu() {
+    dispatch(setMenuView(false));
     dispatch(setDrawerView(null));
+  }
+
+  function handleMenuBack() {
+    dispatch(setMenuView(false));
   }
 
   return (
     <>
-      <div className="w-full h-14 border-b border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 pl-4">
+      <div className="w-full h-14 border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 pl-4">
+        {withBack && (
+          <div
+            className="flex flex-row h-16 items-center px-4"
+            onClick={() => handleMenuBack()}
+          >
+            <>
+              <IoIosArrowBack className="text-[20px]" />
+              <span className="pl-2 font-bold"></span>
+            </>
+          </div>
+        )}
+
         <Logo />
 
         <button
@@ -42,42 +64,44 @@ function MenuHeader() {
         </button>
       </div>
 
-      <div className="flex items-center justify-between px-2 py-2 border-b border-gray-300 border-b-2">
-        <div className="flex border-r border-gray-300 border-r-2 pr-2">
-          <Image
-            src="https://kfc.pl/assets/img/menu/motor.png"
-            width={30}
-            height={30}
-            quality={100}
-            className="object-cover"
-          />
-          <span>Dostawa</span>
-          <Image
-            src="https://kfc.pl/assets/img/menu/clock30.svg"
-            width={30}
-            height={30}
-            quality={100}
-            className="object-cover"
-          />
+      {showDelivery && (
+        <div className="flex items-center justify-between px-2 py-2 border-gray-300 border-b-2">
+          <div className="flex border-gray-300 border-r-2 pr-2">
+            <Image
+              src="https://kfc.pl/assets/img/menu/motor.png"
+              width={30}
+              height={30}
+              quality={100}
+              className="object-cover"
+            />
+            <span>Dostawa</span>
+            <Image
+              src="https://kfc.pl/assets/img/menu/clock30.svg"
+              width={30}
+              height={30}
+              quality={100}
+              className="object-cover"
+            />
+          </div>
+          <div className="flex pl-2 pr-2">
+            <Image
+              src="https://kfc.pl/assets/img/menu/hand.png"
+              width={30}
+              height={30}
+              quality={100}
+              className="object-cover"
+            />
+            <span>Restauracja</span>
+            <Image
+              src="https://kfc.pl/assets/img/menu/clock5.svg"
+              width={30}
+              height={30}
+              quality={100}
+              className="object-cover"
+            />
+          </div>
         </div>
-        <div className="flex pl-2 pr-2">
-          <Image
-            src="https://kfc.pl/assets/img/menu/hand.png"
-            width={30}
-            height={30}
-            quality={100}
-            className="object-cover"
-          />
-          <span>Restauracja</span>
-          <Image
-            src="https://kfc.pl/assets/img/menu/clock5.svg"
-            width={30}
-            height={30}
-            quality={100}
-            className="object-cover"
-          />
-        </div>
-      </div>
+      )}
     </>
   );
 }
@@ -90,10 +114,11 @@ function Menu({ state, categories }) {
   } else if (state === "entering") {
     style = { animation: "moveMenu .25s reverse backwards" };
   }
+  // const style = getAnimationStyle(state, "moveSubMenu");
 
   return (
     <div
-      className="flex flex-col justify-between w-full h-full overflow-y-scroll"
+      className="flex flex-col absolute w-full h-full overflow-y-scroll"
       style={style}
     >
       <MenuHeader />
@@ -158,7 +183,7 @@ function SubMenu({ state }) {
       style={style}
     >
       <div
-        className="flex flex-row h-16 items-center px-4 border-b border-gray-300 border-b-2"
+        className="flex flex-row h-16 items-center px-4 border-gray-300 border-b-2"
         onClick={() => handleMenuBack()}
       >
         <>
@@ -233,9 +258,93 @@ function MenuItem({ text, items, isProduct }) {
   );
 }
 
+function MenuIntro({ state }) {
+  const dispatch = useDispatch();
+
+  const menuIntro = [
+    {
+      name: "MENU",
+      img: "/assets/images/menu/menu.png",
+      url: "/order",
+      onClick: () => {
+        dispatch(setMenuView(true));
+      },
+    },
+    {
+      name: "KUPONY",
+      img: "/assets/images/menu/deal.png",
+      url: "/cupons",
+    },
+    {
+      name: "ZNAJDŹ KFC",
+      img: "/assets/images/menu/find-kfc.png",
+      url: "/find-kfc",
+    },
+    {
+      name: "PRACA",
+      img: "/assets/images/menu/deal.png",
+      url: "/jobs",
+    },
+    {
+      name: "O KFC",
+      img: "/assets/images/menu/about-kfc.png",
+      url: "/about-kfc",
+    },
+  ];
+
+  // const style = getAnimationStyle(state, "moveIntro");
+  let style;
+
+  if (state === "exiting") {
+    style = { animation: "moveIntro .25s reverse backwards" };
+  } else if (state === "entering") {
+    style = { animation: "moveIntro .25s forwards" };
+  }
+
+  const boxClasses =
+    "flex items-center justify-between my-3 mx-4 px-4 h-30 bg-gray-200 font-medium text-sm";
+
+  return (
+    <div
+      className="flex flex-col justify-between w-full h-full overflow-y-scroll"
+      style={style}
+    >
+      <MenuHeader withBack={false} />
+
+      {menuIntro.map((item) => {
+        const content = (
+          <>
+            {item.name}
+            <Image
+              src={item.img}
+              width={120}
+              height={100}
+              className="object-cover"
+            />
+          </>
+        );
+
+        if (item.onClick) {
+          return (
+            <div onClick={item.onClick} className={boxClasses}>
+              {content}
+            </div>
+          );
+        }
+
+        return (
+          <Link href={item.url} className={boxClasses}>
+            {content}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function MobileMenuModern({ sidebarOpen }) {
   const dispatch = useDispatch();
-  const { sidebarSubItems } = useSelector((state) => state.ui);
+  const { sidebarSubItems, displayMenu } = useSelector((state) => state.ui);
 
   // TODO: Move it to containers/categories-block
   const { data, isLoading, error } = useCategoriesQuery();
@@ -257,13 +366,16 @@ export default function MobileMenuModern({ sidebarOpen }) {
     dispatch(setCategoryProducts(categoryProducts));
   }, [data]);
 
-  function displayMenu(state) {
+  function SidebarMenu(state) {
     const style = getAnimationStyle(state, "moveSideBar");
 
     return (
       <div className="flex flex-col w-full h-full" style={style}>
+        <Transition in={!displayMenu} timeout={250} unmountOnExit mountOnEnter>
+          {(state) => <MenuIntro state={state} />}
+        </Transition>
         <Transition
-          in={sidebarSubItems === null}
+          in={displayMenu && sidebarSubItems === null}
           timeout={250}
           unmountOnExit
           mountOnEnter
@@ -271,7 +383,7 @@ export default function MobileMenuModern({ sidebarOpen }) {
           {(state) => <Menu state={state} categories={data?.categories} />}
         </Transition>
         <Transition
-          in={sidebarSubItems !== null}
+          in={displayMenu && sidebarSubItems !== null}
           timeout={250}
           unmountOnExit
           mountOnEnter
@@ -288,8 +400,9 @@ export default function MobileMenuModern({ sidebarOpen }) {
         if (state === "exited") {
           dispatch(setSidebarSubItems(null));
         }
-        return displayMenu(state);
+        return SidebarMenu(state);
       }}
+      {/* <MenuIntro /> */}
     </Transition>
   );
 }

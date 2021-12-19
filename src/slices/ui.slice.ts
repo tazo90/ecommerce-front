@@ -6,6 +6,7 @@ export interface UIState {
   displayFilter: boolean;
   displayCart: boolean;
   displaySearch: boolean;
+  displayMenu: boolean;
   drawerView: DRAWER_VIEWS;
   modalView: MODAL_VIEWS;
   modalData: any;
@@ -27,6 +28,7 @@ export const initialState: UIState = {
   displayFilter: false,
   displayCart: false,
   displaySearch: false,
+  displayMenu: false,
   drawerView: null,
   modalView: null,
   modalData: null,
@@ -73,6 +75,9 @@ const uiSlice = createSlice({
     setDrawerView: (state, action) => {
       state.drawerView = action.payload;
     },
+    setMenuView: (state, action) => {
+      state.displayMenu = action.payload;
+    },
     setModalData: (state, action) => {
       state.modalData = action.payload;
     },
@@ -94,6 +99,7 @@ export const {
   closeSearch,
   setModalView,
   setDrawerView,
+  setMenuView,
   setModalData,
   setSidebarSubItems,
 } = uiSlice.actions;
