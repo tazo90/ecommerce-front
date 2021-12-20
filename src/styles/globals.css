@@ -44,6 +44,15 @@ a {
   }
 }
 
+@keyframes moveMenuBack {
+  0% {
+    transform: translateX(-420px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 @keyframes moveIntro {
   0% {
     transform: translateX(0);

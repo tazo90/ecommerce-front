@@ -5,7 +5,7 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoMenuOutline } from "react-icons/io5";
 import Link from "@components/ui/link";
 import { Drawer } from "@components/common/drawer/drawer";
-import { openSearch, setDrawerView } from "@slices/ui.slice";
+import { openSearch, setDrawerView, setMenuView } from "@slices/ui.slice";
 import Logo from "@components/ui/logo";
 
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
@@ -61,7 +61,10 @@ function BottomNavigation({ top }: BottomNavigationProps) {
       <Drawer
         placement={"left"}
         open={drawerView === "MOBILE_MENU"}
-        onClose={() => dispatch(setDrawerView(null))}
+        onClose={() => {
+          dispatch(setDrawerView(null));
+          dispatch(setMenuView(null));
+        }}
         handler={false}
         showMask={true}
         level={null}

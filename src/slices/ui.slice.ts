@@ -6,10 +6,10 @@ export interface UIState {
   displayFilter: boolean;
   displayCart: boolean;
   displaySearch: boolean;
-  displayMenu: boolean;
   drawerView: DRAWER_VIEWS;
   modalView: MODAL_VIEWS;
   modalData: any;
+  menuView: MENU_VIEW;
   toastText: ToastText;
   sidebarSubItems: any;
 }
@@ -21,6 +21,10 @@ type MODAL_VIEWS =
   | "PRODUCT_VIEW"
   | null;
 type DRAWER_VIEWS = "CART_SIDEBAR" | "MOBILE_MENU" | null;
+type MENU_VIEW = {
+  view: "MENU_INTRO" | "MENU" | "MENU_SUB_1" | null;
+  action: "GO" | "BACK" | null;
+} | null;
 type ToastText = string;
 
 export const initialState: UIState = {
@@ -28,10 +32,10 @@ export const initialState: UIState = {
   displayFilter: false,
   displayCart: false,
   displaySearch: false,
-  displayMenu: false,
   drawerView: null,
   modalView: null,
   modalData: null,
+  menuView: null,
   toastText: "",
   sidebarSubItems: null,
 };
@@ -75,11 +79,11 @@ const uiSlice = createSlice({
     setDrawerView: (state, action) => {
       state.drawerView = action.payload;
     },
-    setMenuView: (state, action) => {
-      state.displayMenu = action.payload;
-    },
     setModalData: (state, action) => {
       state.modalData = action.payload;
+    },
+    setMenuView: (state, action) => {
+      state.menuView = action.payload;
     },
     setSidebarSubItems: (state, action) => {
       state.sidebarSubItems = action.payload;

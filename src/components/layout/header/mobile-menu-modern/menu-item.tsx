@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowForward } from "react-icons/io";
-import { setSidebarSubItems } from "@slices/ui.slice";
+import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
 import { capitalize } from "lodash";
 
 export function MenuItem({ text, items, isProduct }) {
@@ -23,6 +23,7 @@ export function MenuItem({ text, items, isProduct }) {
     }
 
     dispatch(setSidebarSubItems(stackedMenus));
+    dispatch(setMenuView({ view: "MENU_SUB_1", action: "GO" }));
   };
 
   return (

@@ -15,7 +15,7 @@ export function MenuHeader({ withBack = true, showDelivery = false }) {
   }
 
   function handleMenuBack() {
-    dispatch(setMenuView(false));
+    dispatch(setMenuView({ view: "MENU_INTRO", action: "BACK" }));
   }
 
   return (

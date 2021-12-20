@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { IoIosArrowBack } from "react-icons/io";
-import { setSidebarSubItems } from "@slices/ui.slice";
+import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
 import { setCurrentProduct } from "@slices/product.slice";
 import { capitalize, lowerCase } from "lodash";
 import { MenuItem } from "./menu-item";
@@ -34,6 +34,7 @@ export function SubMenu({ state }) {
 
   function handleMenuBack() {
     dispatch(setSidebarSubItems(previousMenu ? [previousMenu] : null));
+    dispatch(setMenuView({ view: "MENU", action: "BACK" }));
   }
 
   function handleProductClick(product) {

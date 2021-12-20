@@ -3,16 +3,21 @@ import Image from "next/image";
 import { MenuHeader } from "./menu-header";
 import { MenuItem } from "./menu-item";
 
-export function Menu({ state, categories }) {
+export function Menu({ state, categories, menuView }) {
+  const translateX = menuView.action === "GO" ? "-420px" : "420px";
+  const enteringClass = menuView.action === "GO" ? "moveMenu" : "moveMenuBack";
+  const exitingClass = menuView.action === "GO" ? "moveMenuBack" : "moveMenu";
+
   const transitionStyles: any = {
-    exiting: { animation: "moveMenu .25s reverse backwards" },
-    entering: { animation: "moveMenu .25s forwards" },
+    entering: { animation: `${enteringClass} .25s forwards` },
     entered: { transform: "translateX(0)" },
+    exiting: { animation: `${exitingClass} .25s reverse backwards` },
+    exited: { transform: `translateX(${translateX})` },
   };
 
   return (
     <div
-      className="flex flex-col absolute w-full h-full overflow-y-scroll translate-x-[420px]"
+      className={`flex flex-col absolute w-full h-full overflow-y-scroll translate-x-[${translateX}]`}
       style={transitionStyles[state]}
     >
       <MenuHeader />

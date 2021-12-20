@@ -14,7 +14,12 @@ export function MenuIntro({ state }) {
       img: "/assets/images/menu/menu.png",
       url: "/order",
       onClick: () => {
-        dispatch(setMenuView(true));
+        dispatch(
+          setMenuView({
+            view: "MENU",
+            action: "GO",
+          })
+        );
       },
     },
     {
