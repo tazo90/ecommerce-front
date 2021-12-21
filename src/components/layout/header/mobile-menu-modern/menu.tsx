@@ -4,9 +4,9 @@ import { MenuHeader } from "./menu-header";
 import { MenuItem } from "./menu-item";
 
 export function Menu({ state, categories, menuView }) {
-  const translateX = menuView.action === "GO" ? "-420px" : "420px";
-  const enteringClass = menuView.action === "GO" ? "moveMenu" : "moveMenuBack";
-  const exitingClass = menuView.action === "GO" ? "moveMenuBack" : "moveMenu";
+  const translateX = "420px";
+  const enteringClass = menuView?.action === "GO" ? "moveMenu" : "moveMenuBack";
+  const exitingClass = menuView?.action === "GO" ? "moveMenuBack" : "moveMenu";
 
   const transitionStyles: any = {
     entering: { animation: `${enteringClass} .25s forwards` },
@@ -27,19 +27,22 @@ export function Menu({ state, categories, menuView }) {
           category.subCategories || Object.values(category.products);
 
         return (
-          <div className="flex items-center pl-4" key={category.id}>
+          <div className="flex items-center pl-4 py-0.5" key={category.id}>
             <Image
               src={category.img}
-              width={70}
-              height={70}
+              alt={category.name}
+              width={80}
+              height={80}
               quality={100}
+              priority
               className="object-cover"
             />
             <MenuItem
               key={category.id}
-              text={category.name}
-              items={categoryItems}
+              item={category}
+              subItems={categoryItems}
               isProduct={false}
+              capitalizeTitle={true}
             />
           </div>
         );

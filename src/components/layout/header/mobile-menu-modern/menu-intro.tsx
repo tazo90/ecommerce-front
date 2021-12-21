@@ -51,7 +51,7 @@ export function MenuIntro({ state }) {
   };
 
   const boxClasses =
-    "flex items-center justify-between my-3 mx-4 px-4 h-30 bg-gray-200 font-medium text-sm";
+    "flex items-center justify-between my-3 mx-4 px-4 h-80 bg-gray-200 rounded-lg font-medium text-sm";
 
   return (
     <div
@@ -66,8 +66,10 @@ export function MenuIntro({ state }) {
             {item.name}
             <Image
               src={item.img}
-              width={120}
-              height={100}
+              alt={item.name}
+              width={140}
+              height={120}
+              priority
               className="object-cover"
             />
           </>

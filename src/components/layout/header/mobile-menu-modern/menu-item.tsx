@@ -4,14 +4,21 @@ import { IoIosArrowForward } from "react-icons/io";
 import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
 import { capitalize } from "lodash";
 
-export function MenuItem({ text, items, isProduct }) {
+export function MenuItem({
+  item,
+  subItems,
+  isProduct,
+  capitalizeTitle = false,
+}) {
   const dispatch = useDispatch();
   const { sidebarSubItems } = useSelector((state) => state.ui);
 
-  const openRow = () => {
+  const name = capitalizeTitle ? capitalize(item.name) : item.name;
+
+  function openRow() {
     const currentMenu = {
-      label: text,
-      items,
+      label: item.name,
+      items: subItems,
     };
 
     let stackedMenus;
@@ -24,15 +31,29 @@ export function MenuItem({ text, items, isProduct }) {
 
     dispatch(setSidebarSubItems(stackedMenus));
     dispatch(setMenuView({ view: "MENU_SUB_1", action: "GO" }));
-  };
+  }
 
   return (
     <div
-      className="flex justify-between items-center w-full py-5 pl-6 pr-4"
+      className={`flex justify-between items-center w-full pr-4 ${
+        isProduct ? "pl-4" : "pl-6"
+      }`}
       onClick={() => openRow()}
     >
-      <div className="text-sm font-semibold">{capitalize(text)}</div>
-      {!isProduct && <IoIosArrowForward />}
+      {isProduct ? (
+        <div className="flex flex-col justify-between w-full h-full pr-4">
+          <div className="text-md font-medium leading-tight">{name}</div>
+          <div className="pt-1 text-[0.8rem] line-clamp-2">
+            {item.plainDescription}
+          </div>
+          <div className="pt-1 text-md font-semibold">{item.price}</div>
+        </div>
+      ) : (
+        <>
+          <div className="text-sm font-semibold">{name}</div>
+          <IoIosArrowForward />
+        </>
+      )}
     </div>
   );
 }
