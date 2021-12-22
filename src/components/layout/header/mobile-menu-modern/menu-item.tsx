@@ -35,13 +35,13 @@ export function MenuItem({
 
   return (
     <div
-      className={`flex justify-between items-center w-full pr-4 ${
-        isProduct ? "pl-4" : "pl-6"
+      className={`flex justify-between items-center w-full ${
+        isProduct ? "pl-4 pr-2" : "pr-4 pl-6"
       }`}
       onClick={() => openRow()}
     >
       {isProduct ? (
-        <div className="flex flex-col justify-between w-full h-full pr-4">
+        <div className="flex flex-col justify-between w-full h-full">
           <div className="text-md font-medium leading-tight">{name}</div>
           <div className="pt-1 text-[0.8rem] line-clamp-2">
             {item.plainDescription}
