@@ -12,7 +12,7 @@ export function MenuIntro({ state }) {
     {
       name: "MENU",
       img: "/assets/images/menu/menu.png",
-      url: "/order",
+      url: "/products",
       onClick: () => {
         dispatch(
           setMenuView({

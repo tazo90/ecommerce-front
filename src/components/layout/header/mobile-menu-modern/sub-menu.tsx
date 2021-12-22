@@ -4,7 +4,11 @@ import Image from "next/image";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { IoIosArrowBack } from "react-icons/io";
-import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
+import {
+  setSidebarSubItems,
+  setMenuView,
+  setDrawerView,
+} from "@slices/ui.slice";
 import { setCurrentProduct } from "@slices/product.slice";
 import { capitalize, lowerCase } from "lodash";
 import { MenuItem } from "./menu-item";
@@ -42,9 +46,10 @@ export function SubMenu({ state }) {
     if (!product.price) return;
 
     dispatch(setCurrentProduct(product));
+    dispatch(setDrawerView(null));
 
     const productSlug = lowerCase(product.name).replaceAll(" ", "-");
-    router.push(`/order/${productSlug}-${product.id}`);
+    router.push(`/products/${productSlug}-${product.id}`);
   }
 
   return (
@@ -69,8 +74,6 @@ export function SubMenu({ state }) {
 
       {currentMenu?.items?.map((item) => {
         const isProduct = item.price !== undefined;
-
-        console.log("IT", item);
 
         return (
           <div
