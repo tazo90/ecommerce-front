@@ -27,7 +27,7 @@ export default function ProductSingleDetails() {
               {currentProduct?.name}
             </h2>
             <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
-              {currentProduct?.price}
+              {currentProduct?.price} zł
             </h2>
           </div>
           <p className="text-body text-sm lg:text-base leading-6 lg:leading-8">

@@ -28,15 +28,17 @@ export function Menu({ state, categories, menuView }) {
 
         return (
           <div className="flex items-center pl-4 py-0.5" key={category.id}>
-            <Image
-              src={category.img}
-              alt={category.name}
-              width={80}
-              height={80}
-              quality={100}
-              priority
-              className="object-cover"
-            />
+            {category.img && (
+              <Image
+                src={category.img}
+                alt={category.name}
+                width={80}
+                height={80}
+                quality={100}
+                priority
+                className="object-cover"
+              />
+            )}
             <MenuItem
               key={category.id}
               item={category}

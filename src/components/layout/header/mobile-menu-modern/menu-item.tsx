@@ -46,7 +46,7 @@ export function MenuItem({
           <div className="pt-1 text-[0.8rem] line-clamp-2">
             {item.plainDescription}
           </div>
-          <div className="pt-1 text-md font-semibold">{item.price}</div>
+          <div className="pt-1 text-md font-semibold">{item.price} zł</div>
         </div>
       ) : (
         <>
