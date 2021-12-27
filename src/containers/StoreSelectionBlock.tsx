@@ -10,7 +10,7 @@ function StoreSelectionBlock() {
       </span>
 
       <div className="flex items-center justify-between w-full h-48 px-4">
-        <div className="flex items-center justify-center relative w-1/2 h-full bg-gray-300 rounded-lg mr-12">
+        <div className="flex flex-col items-center justify-center relative w-1/2 h-full bg-gray-100 rounded-lg mr-6 pt-8">
           <Image
             src="https://kfc.pl/assets/img/menu/motor.png"
             width={60}
@@ -19,7 +19,7 @@ function StoreSelectionBlock() {
             className="object-cover"
           />
           <span className="pl-4 text-2xl font-semibold">Dostawa</span>
-          <div className="absolute bottom-0 right-1">
+          <div className="absolute top-2 right-2">
             <Image
               src="https://kfc.pl/assets/img/menu/clock30.svg"
               width={46}
@@ -29,7 +29,7 @@ function StoreSelectionBlock() {
             />
           </div>
         </div>
-        <div className="flex items-center justify-center relative w-1/2 h-full bg-gray-300 rounded-lg">
+        <div className="flex flex-col items-center justify-center relative w-1/2 h-full bg-gray-100 rounded-lg pt-8">
           <Image
             src="https://kfc.pl/assets/img/menu/hand.png"
             width={60}
@@ -38,7 +38,7 @@ function StoreSelectionBlock() {
             className="object-cover"
           />
           <span className="pl-4 text-2xl font-semibold">Restauracja</span>
-          <div className="absolute bottom-0 right-1">
+          <div className="absolute top-2 right-2">
             <Image
               src="https://kfc.pl/assets/img/menu/clock5.svg"
               width={46}

@@ -1,6 +1,6 @@
+import { useRouter } from "next/router";
 import Button from "@components/ui/button";
 import { ROUTES } from "@utils/routes";
-import { useRouter } from "next/router";
 
 export default function StartOrderButton() {
   const router = useRouter();
