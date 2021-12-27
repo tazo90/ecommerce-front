@@ -10,7 +10,8 @@ import {
   setDrawerView,
 } from "@slices/ui.slice";
 import { setCurrentProduct } from "@slices/product.slice";
-import { capitalize, lowerCase } from "lodash";
+import capitalize from "lodash/capitalize";
+import lowerCase from "lodash/lowerCase";
 import { MenuItem } from "./menu-item";
 
 function getAnimationStyle(state: string, cssAnimatinoClass: string) {
@@ -38,8 +39,9 @@ export function SubMenu({ state }) {
     sidebarSubItems?.length > 1 ? sidebarSubItems?.slice(-2)[0] : null;
 
   function handleMenuBack() {
+    const previousView = previousMenu ? "MENU_SUB_1" : "MENU";
     dispatch(setSidebarSubItems(previousMenu ? [previousMenu] : null));
-    dispatch(setMenuView({ view: "MENU", action: "BACK" }));
+    dispatch(setMenuView({ view: previousView, action: "BACK" }));
   }
 
   function handleProductClick(product) {
