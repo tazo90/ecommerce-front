@@ -24,14 +24,14 @@ export default function ProductSingleDetails() {
         <div className="pb-7 mb-7 border-b border-gray-300">
           <div className="flex justify-between">
             <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
-              {currentProduct.name}
+              {currentProduct?.name}
             </h2>
             <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
-              {currentProduct.price}
+              {currentProduct?.price}
             </h2>
           </div>
           <p className="text-body text-sm lg:text-base leading-6 lg:leading-8">
-            {currentProduct.description}
+            {currentProduct?.description}
           </p>
         </div>
       </div>

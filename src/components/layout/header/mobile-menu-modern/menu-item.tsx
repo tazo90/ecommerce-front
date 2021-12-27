@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowForward } from "react-icons/io";
 import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
-import { capitalize } from "lodash";
+import capitalize from "lodash/capitalize";
 
 export function MenuItem({
   item,
