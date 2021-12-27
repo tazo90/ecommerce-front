@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Transition } from "react-transition-group";
 import { setMenuView, setSidebarSubItems } from "@slices/ui.slice";
-import { setCategoryProducts } from "@slices/category.slice";
+import { setCategories, setCategoryProducts } from "@slices/category.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
 import { SubMenu } from "./sub-menu";
 import { MenuIntro } from "./menu-intro";
@@ -34,20 +34,8 @@ export default function MobileMenuModern({ sidebarOpen }) {
   }, [sidebarOpen]);
 
   useEffect(() => {
-    const categoryProducts = {};
-    data?.categories.map((category) => {
-      Object.values(category.products).map((product) => {
-        product.subCategoryId?.map((categoryId) => {
-          if (categoryProducts.hasOwnProperty(categoryId)) {
-            categoryProducts[categoryId].push(product);
-          } else {
-            categoryProducts[categoryId] = [product];
-          }
-        });
-      });
-    });
-
-    dispatch(setCategoryProducts(categoryProducts));
+    dispatch(setCategories(data));
+    dispatch(setCategoryProducts(data));
   }, [data]);
 
   function SidebarMenu(state) {
