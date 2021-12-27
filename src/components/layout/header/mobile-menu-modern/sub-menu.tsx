@@ -39,8 +39,15 @@ export function SubMenu({ state }) {
     sidebarSubItems?.length > 1 ? sidebarSubItems?.slice(-2)[0] : null;
 
   function handleMenuBack() {
-    const previousView = previousMenu ? "MENU_SUB_1" : "MENU";
-    dispatch(setSidebarSubItems(previousMenu ? [previousMenu] : null));
+    let previousView = "MENU";
+    let previousSidebarItems = null;
+
+    if (previousMenu) {
+      previousView = "MENU_SUB_1";
+      previousSidebarItems = [previousMenu];
+    }
+
+    dispatch(setSidebarSubItems(previousSidebarItems));
     dispatch(setMenuView({ view: previousView, action: "BACK" }));
   }
 
