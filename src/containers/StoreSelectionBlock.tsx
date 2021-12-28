@@ -18,7 +18,7 @@ function StoreSelectionBlock() {
             quality={100}
             className="object-cover"
           />
-          <span className="pl-4 text-2xl font-semibold">Dostawa</span>
+          <span className="pl-4 text-2xl font-semibold">Z Dostawą</span>
           <div className="absolute top-2 right-2">
             <Image
               src="https://kfc.pl/assets/img/menu/clock30.svg"
@@ -37,7 +37,7 @@ function StoreSelectionBlock() {
             quality={100}
             className="object-cover"
           />
-          <span className="pl-4 text-2xl font-semibold">Restauracja</span>
+          <span className="pl-4 text-2xl font-semibold">Z Odbiorem</span>
           <div className="absolute top-2 right-2">
             <Image
               src="https://kfc.pl/assets/img/menu/clock5.svg"
