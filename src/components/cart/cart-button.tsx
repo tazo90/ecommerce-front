@@ -8,7 +8,7 @@ function CartButton() {
       aria-label="cart-button"
     >
       <IoCartOutline className="text-3xl" />
-      <span className="cart-counter-badge flex items-center justify-center bg-heading text-white absolute -top-1 xl:-top-3 -end-2.5 xl:-end-3 rounded-full font-bold">
+      <span className="cart-counter-badge flex items-center justify-center bg-heading text-white absolute -top-1 xl:-top-3 -right-1.5 xl:-right-3 rounded-full font-bold">
         10
       </span>
     </button>

@@ -10,28 +10,30 @@ export default function ProductSingleDetails() {
     query: { slug },
   } = useRouter();
 
+  console.log(currentProduct);
+
   const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-16 pb-10 lg:pb-14 2xl:pb-20 items-start">
       <div className="col-span-5 grid grid-cols-1">
-        <div className="col-span-1 transition duration-150 ease-in hover:opacity-90">
-          <img src={currentProduct?.img} className="object-cover w-full" />
+        <div className="flex justify-center col-span-1 transition duration-150 ease-in hover:opacity-90">
+          <img src={currentProduct?.img} className="object-cover w-4/5" />
         </div>
       </div>
 
       <div className="col-span-4 pt-4 lg:pt-0">
         <div className="pb-7 mb-7 border-b border-gray-300">
           <div className="flex justify-between">
-            <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
+            <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-semibold hover:text-black mb-3.5 mr-0.5">
               {currentProduct?.name}
             </h2>
-            <h2 className="text-heading text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
+            <h2 className="text-heading text-center text-2xl md:text-xl lg:text-2xl 2xl:text-3xl font-semibold hover:text-black mb-3.5">
               {currentProduct?.price} zł
             </h2>
           </div>
-          <p className="text-body text-sm lg:text-base leading-6 lg:leading-8">
-            {currentProduct?.description}
+          <p className="text-body text-md lg:text-base leading-6 lg:leading-8">
+            {currentProduct?.plainDescription}
           </p>
         </div>
       </div>
