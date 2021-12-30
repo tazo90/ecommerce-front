@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import cn from "classnames";
@@ -28,7 +28,7 @@ export function SubMenu() {
   const previousMenu =
     sidebarSubItems?.length > 1 ? sidebarSubItems?.slice(-2)[0] : null;
 
-  function handleMenuBack() {
+  const handleMenuBack = useCallback(() => {
     let previousView = "MENU";
     let previousSidebarItems = null;
 
@@ -37,9 +37,11 @@ export function SubMenu() {
       previousSidebarItems = [previousMenu];
     }
 
+    console.log("BACK");
+
     dispatch(setSidebarSubItems(previousSidebarItems));
     dispatch(setMenuView({ view: previousView, action: "BACK" }));
-  }
+  }, [previousMenu]);
 
   function handleProductClick(product) {
     if (!product.price) return;

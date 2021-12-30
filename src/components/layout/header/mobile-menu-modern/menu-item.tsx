@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowForward } from "react-icons/io";
 import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
@@ -15,7 +15,7 @@ export function MenuItem({
 
   const name = capitalizeTitle ? capitalize(item.name) : item.name;
 
-  function openRow() {
+  const openRow = useCallback(() => {
     const currentMenu = {
       label: item.name,
       items: subItems,
@@ -31,9 +31,11 @@ export function MenuItem({
 
     const view = `MENU_SUB_${stackedMenus.length}`;
 
+    console.log("OPEN ROW");
+
     dispatch(setSidebarSubItems(stackedMenus));
     dispatch(setMenuView({ view: view, action: "GO" }));
-  }
+  }, [sidebarSubItems]);
 
   return (
     <div
