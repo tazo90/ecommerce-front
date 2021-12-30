@@ -29,8 +29,10 @@ export function MenuItem({
       stackedMenus.push(currentMenu);
     }
 
+    const view = `MENU_SUB_${stackedMenus.length}`;
+
     dispatch(setSidebarSubItems(stackedMenus));
-    dispatch(setMenuView({ view: "MENU_SUB_1", action: "GO" }));
+    dispatch(setMenuView({ view: view, action: "GO" }));
   }
 
   return (
