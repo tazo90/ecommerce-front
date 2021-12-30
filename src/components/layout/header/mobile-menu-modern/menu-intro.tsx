@@ -5,7 +5,7 @@ import Link from "@components/ui/link";
 import { setMenuView } from "@slices/ui.slice";
 import { MenuHeader } from "./menu-header";
 
-export function MenuIntro({ state }) {
+export function MenuIntro() {
   const dispatch = useDispatch();
 
   const menuIntro = [
@@ -44,20 +44,11 @@ export function MenuIntro({ state }) {
     },
   ];
 
-  const transitionStyles: any = {
-    exiting: { animation: "moveIntro .25s forwards" },
-    entering: { animation: "moveIntro .25s reverse backwards" },
-    exited: { transform: "translateX(-420px)" },
-  };
-
   const boxClasses =
     "flex items-center justify-between my-3 mx-4 px-4 h-80 bg-gray-200 rounded-lg font-medium text-sm";
 
   return (
-    <div
-      className="flex flex-col justify-between w-full h-full overflow-y-scroll"
-      style={transitionStyles[state]}
-    >
+    <div className="flex flex-col justify-between absolute w-full h-full">
       <MenuHeader withBack={false} />
 
       {menuIntro.map((item) => {

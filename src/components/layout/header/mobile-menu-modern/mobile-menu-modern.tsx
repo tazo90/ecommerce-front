@@ -1,21 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Transition } from "react-transition-group";
 import { setMenuView, setSidebarSubItems } from "@slices/ui.slice";
 import { setCategories, setCategoryProducts } from "@slices/category.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
 import { SubMenu } from "./sub-menu";
 import { MenuIntro } from "./menu-intro";
 import { Menu } from "./menu";
-
-function getAnimationStyle(state: string, cssAnimatinoClass: string) {
-  if (state === "entering") {
-    return { animation: `${cssAnimatinoClass} .25s forwards` };
-  } else if (state === "entered") {
-    return { transform: "translateX(0)" };
-  }
-  return { animation: `${cssAnimatinoClass} .15s reverse backwards` };
-}
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function MobileMenuModern({ sidebarOpen }) {
   const dispatch = useDispatch();
@@ -31,6 +22,10 @@ export default function MobileMenuModern({ sidebarOpen }) {
         action: "GO",
       })
     );
+
+    return () => {
+      dispatch(setSidebarSubItems(null));
+    };
   }, [sidebarOpen]);
 
   useEffect(() => {
@@ -38,53 +33,88 @@ export default function MobileMenuModern({ sidebarOpen }) {
     dispatch(setCategoryProducts(data));
   }, [data]);
 
-  function SidebarMenu(state) {
-    const style = getAnimationStyle(state, "moveSideBar");
+  const action = menuView?.action || "GO";
 
-    return (
-      <div className="flex flex-col w-full h-full" style={style}>
-        <Transition
-          in={menuView?.view === "MENU_INTRO"}
-          timeout={250}
-          unmountOnExit
-          mountOnEnter
-        >
-          {(state) => <MenuIntro state={state} />}
-        </Transition>
-        <Transition
-          in={menuView?.view === "MENU"}
-          timeout={250}
-          unmountOnExit
-          mountOnEnter
-        >
-          {(state) => (
-            <Menu
-              state={state}
-              categories={data?.categories}
-              menuView={menuView}
-            />
-          )}
-        </Transition>
-        <Transition
-          in={menuView?.view === "MENU_SUB_1"}
-          timeout={250}
-          unmountOnExit
-          mountOnEnter
-        >
-          {(state) => <SubMenu state={state} />}
-        </Transition>
-      </div>
-    );
-  }
+  console.log(menuView);
+
+  const tabVariant = {
+    active: {
+      x: 0,
+      transition: {
+        type: "tween",
+        duration: 0.4,
+      },
+    },
+    inactive: {
+      x: "-100%",
+      transition: {
+        type: "tween",
+        duration: 0.4,
+      },
+    },
+    inactiveRight: {
+      x: "100%",
+      transition: {
+        type: "tween",
+        duration: 0.4,
+      },
+    },
+  };
 
   return (
-    <Transition in={sidebarOpen} timeout={250} mountOnEnter unmountOnExit>
-      {(state) => {
-        if (state === "exited") {
-          dispatch(setSidebarSubItems(null));
-        }
-        return SidebarMenu(state);
-      }}
-    </Transition>
+    <div className="flex flex-col w-full h-full relative">
+      <AnimatePresence exitBeforeEnter={false}>
+        {menuView?.view === "MENU_INTRO" && (
+          <motion.div
+            layout
+            key="menu_intro"
+            variants={tabVariant}
+            initial="inactive"
+            animate="active"
+            exit="inactive"
+          >
+            <MenuIntro />
+          </motion.div>
+        )}
+
+        {menuView?.view === "MENU" && (
+          <motion.div
+            layout
+            key="menu"
+            variants={tabVariant}
+            initial="inactiveRight"
+            animate={action === "GO" ? "active" : "inactive"}
+            exit={action === "GO" ? "inactiveRight" : "inactive"}
+          >
+            <Menu categories={data?.categories} />
+          </motion.div>
+        )}
+
+        {menuView?.view === "MENU_SUB_1" && (
+          <motion.div
+            layout
+            key="menu_sub_1"
+            variants={tabVariant}
+            initial="inactiveRight"
+            animate={action === "GO" ? "active" : "inactive"}
+            exit="inactive"
+          >
+            <SubMenu />
+          </motion.div>
+        )}
+
+        {menuView?.view === "MENU_SUB_2" && (
+          <motion.div
+            key="menu_sub_2"
+            variants={tabVariant}
+            initial="inactiveRight"
+            animate={action === "GO" ? "active" : "inactive"}
+            exit="inactive"
+          >
+            <SubMenu />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

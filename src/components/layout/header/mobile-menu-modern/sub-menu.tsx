@@ -14,16 +14,7 @@ import capitalize from "lodash/capitalize";
 import lowerCase from "lodash/lowerCase";
 import { MenuItem } from "./menu-item";
 
-function getAnimationStyle(state: string, cssAnimatinoClass: string) {
-  if (state === "entering") {
-    return { animation: `${cssAnimatinoClass} .25s forwards` };
-  } else if (state === "entered") {
-    return { transform: "translateX(0)" };
-  }
-  return { animation: `${cssAnimatinoClass} .15s reverse backwards` };
-}
-
-export function SubMenu({ state }) {
+export function SubMenu() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { sidebarSubItems, categoryProducts } = useSelector((state) => {
@@ -33,7 +24,6 @@ export function SubMenu({ state }) {
     };
   });
 
-  const style = getAnimationStyle(state, "moveSubMenu");
   const currentMenu = sidebarSubItems?.slice(-1)[0];
   const previousMenu =
     sidebarSubItems?.length > 1 ? sidebarSubItems?.slice(-2)[0] : null;
@@ -62,10 +52,7 @@ export function SubMenu({ state }) {
   }
 
   return (
-    <div
-      className="flex flex-col absolute pb-6 w-full h-full overflow-y-scroll overflow-x-hidden translate-x-[420px]"
-      style={style}
-    >
+    <div className="flex flex-col absolute w-full h-full pb-6">
       <div
         className="flex items-center px-4 py-4 h-14 border-gray-300 border-b-2"
         onClick={() => handleMenuBack()}
