@@ -6,10 +6,10 @@ export default function StartOrderButton() {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(ROUTES.STORE_SELECTION);
+    router.push(ROUTES.STORE_LOCATOR);
   };
 
-  if (router.route === ROUTES.STORE_SELECTION) {
+  if (router.route.startsWith(ROUTES.STORE_LOCATOR)) {
     return null;
   }
 

@@ -20,6 +20,7 @@ module.exports = {
         facebookHover: '#395fad',
         google: '#4285F4',
         googleHover: '#307bf9',
+        green: '#abc60d',
         gray: {
           50: '#FBFBFB',
           100: '#F1F1F1',
