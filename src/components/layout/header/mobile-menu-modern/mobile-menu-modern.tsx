@@ -85,7 +85,6 @@ export default function MobileMenuModern({ sidebarOpen }) {
   );
 
   let exit = "inactive";
-  console.log("MOB", menuView, action);
   if (menuView?.view === "MENU_INTRO") {
     console.log("1");
     exit = "inactive";
@@ -95,7 +94,8 @@ export default function MobileMenuModern({ sidebarOpen }) {
   } else {
     exit = "inactive";
   }
-  console.log("EXIT", exit);
+
+  console.log("MOB", menuView, action, exit);
 
   return (
     <div className="flex flex-col w-full h-full relative">
@@ -118,8 +118,8 @@ export default function MobileMenuModern({ sidebarOpen }) {
             layout
             key="menu"
             variants={tabVariant}
-            // initial={action === "GO" ? "inactiveRight" : "inactive"}
-            initial="inactiveRight"
+            initial={action === "GO" ? "inactiveRight" : "inactive"}
+            // initial="inactiveRight"
             animate="active"
             // animate={action === "GO" ? "active" : "inactive"}
             // exit={() => getExitAnimation(menuView)}
@@ -137,9 +137,10 @@ export default function MobileMenuModern({ sidebarOpen }) {
             layout
             key="menu_sub_1"
             variants={tabVariant}
-            initial="inactiveRight"
-            animate={action === "GO" ? "active" : "inactive"}
-            exit="inactive"
+            initial={action === "GO" ? "inactiveRight" : "inactive"}
+            // animate={action === "GO" ? "active" : "inactive"}
+            animate="active"
+            exit="inactiveRight"
           >
             <SubMenu />
           </motion.div>
@@ -151,7 +152,7 @@ export default function MobileMenuModern({ sidebarOpen }) {
             variants={tabVariant}
             initial="inactiveRight"
             animate={action === "GO" ? "active" : "inactive"}
-            exit="inactive"
+            exit="inactiveRight"
           >
             <SubMenu />
           </motion.div>
