@@ -71,8 +71,6 @@ export default function MobileMenuSide({ sidebarOpen }) {
   let currentMenu = menuItems?.length >= 1 ? menuItems?.slice(-1)[0] : null;
   let previousMenu = menuItems?.length >= 2 ? menuItems?.slice(-2)[0] : null;
 
-  console.log("MENU", previousMenu, currentMenu, menuItems, menuView);
-
   useEffect(() => {
     if (sidebarOpen) {
       setMenuView({

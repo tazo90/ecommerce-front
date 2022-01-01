@@ -12,7 +12,7 @@ export function Menu({
   handleCloseMenu,
 }) {
   return (
-    <div className={`flex flex-col absolute w-full h-full`}>
+    <div className="flex flex-col absolute w-full h-full">
       <MenuHeader
         currentMenu={currentMenu}
         previousMenu={previousMenu}

@@ -33,8 +33,6 @@ export function SubMenu({
     router.push(`/products/${productSlug}-${product.id}`);
   }
 
-  console.log("SUBMENU", previousMenu, currentMenu);
-
   return (
     <div className="flex flex-col absolute w-full h-full pb-6">
       <MenuHeader
