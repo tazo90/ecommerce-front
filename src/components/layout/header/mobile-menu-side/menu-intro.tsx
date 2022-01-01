@@ -1,26 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "@components/ui/link";
-import { setMenuView } from "@slices/ui.slice";
 import { MenuHeader } from "./menu-header";
 
-export function MenuIntro() {
-  const dispatch = useDispatch();
-
+export function MenuIntro({ handleCloseMenu, handleMenuClick }) {
   const menuIntro = [
     {
       name: "MENU",
       img: "/assets/images/menu/menu.png",
       url: "/products",
-      onClick: () => {
-        dispatch(
-          setMenuView({
-            view: "MENU",
-            action: "GO",
-          })
-        );
-      },
+      onClick: () => handleMenuClick(),
     },
     {
       name: "KUPONY",
@@ -49,7 +38,7 @@ export function MenuIntro() {
 
   return (
     <div className="flex flex-col justify-between absolute w-full h-full">
-      <MenuHeader withBack={false} />
+      <MenuHeader handleCloseMenu={handleCloseMenu} />
 
       {menuIntro.map((item) => {
         const content = (

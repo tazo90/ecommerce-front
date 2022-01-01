@@ -1,48 +1,22 @@
-import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { setSidebarSubItems, setMenuView } from "@slices/ui.slice";
 import capitalize from "lodash/capitalize";
 
 export function MenuItem({
   item,
   subItems,
   isProduct,
+  handleOpenMenu,
   capitalizeTitle = false,
 }) {
-  const dispatch = useDispatch();
-  const { sidebarSubItems } = useSelector((state) => state.ui);
-
   const name = capitalizeTitle ? capitalize(item.name) : item.name;
-
-  const openRow = useCallback(() => {
-    const currentMenu = {
-      label: item.name,
-      items: subItems,
-    };
-
-    let stackedMenus;
-    if (sidebarSubItems === null) {
-      stackedMenus = [currentMenu];
-    } else {
-      stackedMenus = [...sidebarSubItems];
-      stackedMenus.push(currentMenu);
-    }
-
-    const view = `MENU_SUB_${stackedMenus.length}`;
-
-    console.log("OPEN ROW");
-
-    dispatch(setSidebarSubItems(stackedMenus));
-    dispatch(setMenuView({ view: view, action: "GO" }));
-  }, [sidebarSubItems]);
 
   return (
     <div
       className={`flex justify-between items-center w-full ${
         isProduct ? "pl-4 pr-2" : "pr-4 pl-6"
       }`}
-      onClick={() => openRow()}
+      onClick={() => handleOpenMenu(item, subItems)}
     >
       {isProduct ? (
         <div className="flex flex-col justify-between w-full h-full">

@@ -9,9 +9,7 @@ export interface UIState {
   drawerView: DRAWER_VIEWS;
   modalView: MODAL_VIEWS;
   modalData: any;
-  menuView: MENU_VIEW;
   toastText: ToastText;
-  sidebarSubItems: any;
 }
 
 type MODAL_VIEWS =
@@ -21,10 +19,6 @@ type MODAL_VIEWS =
   | "PRODUCT_VIEW"
   | null;
 type DRAWER_VIEWS = "CART_SIDEBAR" | "MOBILE_MENU" | null;
-type MENU_VIEW = {
-  view: "MENU_INTRO" | "MENU" | "MENU_SUB_1" | null;
-  action: "GO" | "BACK" | null;
-} | null;
 type ToastText = string;
 
 export const initialState: UIState = {
@@ -35,9 +29,7 @@ export const initialState: UIState = {
   drawerView: null,
   modalView: null,
   modalData: null,
-  menuView: null,
   toastText: "",
-  sidebarSubItems: null,
 };
 
 const uiSlice = createSlice({
@@ -82,12 +74,6 @@ const uiSlice = createSlice({
     setModalData: (state, action) => {
       state.modalData = action.payload;
     },
-    setMenuView: (state, action) => {
-      state.menuView = action.payload;
-    },
-    setSidebarSubItems: (state, action) => {
-      state.sidebarSubItems = action.payload;
-    },
   },
 });
 
@@ -103,9 +89,7 @@ export const {
   closeSearch,
   setModalView,
   setDrawerView,
-  setMenuView,
   setModalData,
-  setSidebarSubItems,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

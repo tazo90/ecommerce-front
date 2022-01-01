@@ -1,39 +1,36 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Logo from "@components/ui/logo";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { setDrawerView, setMenuView } from "@slices/ui.slice";
+import capitalize from "lodash/capitalize";
 
-export function MenuHeader({ withBack = true, showDelivery = false }) {
-  const dispatch = useDispatch();
-
-  function handleCloseMenu() {
-    dispatch(setMenuView(false));
-    dispatch(setDrawerView(null));
-  }
-
-  function handleMenuBack() {
-    dispatch(setMenuView({ view: "MENU_INTRO", action: "BACK" }));
-  }
-
+export function MenuHeader({
+  handleCloseMenu,
+  handleBackMenu,
+  previousMenu,
+  showDelivery = false,
+}) {
   return (
     <>
-      <div className="w-full h-14 border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 pl-4">
-        {withBack && (
+      <div className="w-full h-14 border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 ">
+        {handleBackMenu && (
           <div
-            className="flex flex-row h-16 items-center px-4"
-            onClick={() => handleMenuBack()}
+            className="flex items-center px-4 py-4 h-14 border-gray-300 border-b-2"
+            onClick={() => handleBackMenu()}
           >
             <>
               <IoIosArrowBack className="text-[20px]" />
-              <span className="pl-2 font-bold"></span>
+              {previousMenu && (
+                <span className="pl-2 font-bold">
+                  {capitalize(previousMenu.label) || "Main Menu"}
+                </span>
+              )}
             </>
           </div>
         )}
 
-        <Logo />
+        {!previousMenu && <Logo className="pl-4" />}
 
         <button
           className="flex text-2xl items-center justify-center text-gray-500 px-4 md:px-5 py-6 lg:py-8 focus:outline-none transition-opacity hover:opacity-60"

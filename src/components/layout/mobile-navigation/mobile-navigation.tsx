@@ -5,14 +5,14 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoMenuOutline } from "react-icons/io5";
 import Link from "@components/ui/link";
 import { Drawer } from "@components/common/drawer/drawer";
-import { openSearch, setDrawerView, setMenuView } from "@slices/ui.slice";
+import { openSearch, setDrawerView } from "@slices/ui.slice";
 import Logo from "@components/ui/logo";
 
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
   ssr: false,
 });
-const MobileMenuModern = dynamic(
-  () => import("@components/layout/header/mobile-menu-modern")
+const MobileMenuSide = dynamic(
+  () => import("@components/layout/header/mobile-menu-side")
 );
 
 interface BottomNavigationProps {
@@ -63,7 +63,6 @@ function BottomNavigation({ top }: BottomNavigationProps) {
         open={drawerView === "MOBILE_MENU"}
         onClose={() => {
           dispatch(setDrawerView(null));
-          dispatch(setMenuView(null));
         }}
         handler={false}
         showMask={true}
@@ -71,7 +70,7 @@ function BottomNavigation({ top }: BottomNavigationProps) {
         width="85%"
         contentWrapperStyle={{ left: 0 }}
       >
-        <MobileMenuModern sidebarOpen={drawerView === "MOBILE_MENU"} />
+        <MobileMenuSide sidebarOpen={drawerView === "MOBILE_MENU"} />
       </Drawer>
     </>
   );

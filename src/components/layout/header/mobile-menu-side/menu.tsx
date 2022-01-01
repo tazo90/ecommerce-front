@@ -3,10 +3,22 @@ import Image from "next/image";
 import { MenuHeader } from "./menu-header";
 import { MenuItem } from "./menu-item";
 
-export function Menu({ categories }) {
+export function Menu({
+  categories,
+  currentMenu,
+  previousMenu,
+  handleOpenMenu,
+  handleBackMenu,
+  handleCloseMenu,
+}) {
   return (
     <div className={`flex flex-col absolute w-full h-full`}>
-      <MenuHeader />
+      <MenuHeader
+        currentMenu={currentMenu}
+        previousMenu={previousMenu}
+        handleCloseMenu={handleCloseMenu}
+        handleBackMenu={handleBackMenu}
+      />
 
       {categories?.map((category) => {
         const categoryItems =
@@ -31,6 +43,7 @@ export function Menu({ categories }) {
               subItems={categoryItems}
               isProduct={false}
               capitalizeTitle={true}
+              handleOpenMenu={handleOpenMenu}
             />
           </div>
         );
