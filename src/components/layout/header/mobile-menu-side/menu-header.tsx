@@ -9,6 +9,7 @@ export function MenuHeader({
   handleCloseMenu,
   handleBackMenu,
   previousMenu,
+  currentMenu,
   showDelivery = false,
 }) {
   return (
@@ -40,6 +41,12 @@ export function MenuHeader({
           <IoClose className="text-black mt-1 md:mt-0.5" />
         </button>
       </div>
+
+      {previousMenu && (
+        <div className="uppercase font-bold px-6 pt-4 pb-2 text-lg">
+          {currentMenu?.label}
+        </div>
+      )}
 
       {showDelivery && (
         <div className="flex items-center justify-between px-2 py-2 border-gray-300 border-b-2">
