@@ -8,26 +8,6 @@ import { MenuIntro } from "./menu-intro";
 import { Menu } from "./menu";
 import { AnimatePresence, motion } from "framer-motion";
 
-// const getExitAnimation = useCallback(
-//   (menuView) => {
-//     console.log("ACTION", menuView);
-
-//     if (menuView?.action === "GO" && menuView?.view === "MENU_INTRO") {
-//       return "inactive";
-//     }
-//     if (menuView?.action === "GO") {
-//       return "inactiveRight";
-//     }
-
-//     if (menuView?.action === "BACK") {
-//       return "inactiveRight";
-//     }
-
-//     return "inactive";
-//   },
-//   [menuView]
-// );
-
 type MENU_VIEW = {
   view: "MENU_INTRO" | "MENU" | "MENU_SUB_1" | "MENU_SUB_2" | null;
   action: "GO" | "BACK" | null;
@@ -36,21 +16,21 @@ type MENU_VIEW = {
 const MENUS = ["MENU_INTRO", "MENU", "MENU_SUB_1", "MENU_SUB_2"];
 
 const variant = {
-  active: {
+  show: {
     x: 0,
     transition: {
       type: "tween",
       duration: 0.4,
     },
   },
-  inactive: {
+  hidden: {
     x: "-100%",
     transition: {
       type: "tween",
       duration: 0.4,
     },
   },
-  inactiveRight: {
+  hiddenRight: {
     x: "100%",
     transition: {
       type: "tween",
@@ -88,9 +68,7 @@ export default function MobileMenuSide({ sidebarOpen }) {
   useEffect(() => {
     dispatch(setCategories(data));
     dispatch(setCategoryProducts(data));
-
-    setMenuItems([{ label: null, items: data?.categories }]);
-  }, [data, sidebarOpen]);
+  }, [data]);
 
   function handleCloseMenu() {
     setMenuView(null);
@@ -124,7 +102,7 @@ export default function MobileMenuSide({ sidebarOpen }) {
     const menuIndex = MENUS.findIndex(
       (menuName) => menuName === menuView?.view
     );
-    let previousView = MENUS[menuIndex - 1];
+    const previousView = MENUS[menuIndex - 1];
 
     // Remove last element
     const stackedMenus = [...menuItems];
@@ -136,22 +114,6 @@ export default function MobileMenuSide({ sidebarOpen }) {
 
   const action = menuView?.action;
 
-  let exit = "inactive";
-  if (menuView?.action === "BACK") {
-    // if (menuView?.view === "MENU_INTRO") {
-    //   console.log("1");
-    //   exit = "inactive";
-    // } else if (menuView?.view === "MENU") {
-    //   console.log("2");
-    //   exit = "inactiveRight";
-    // } else {
-    //   exit = "inactive";
-    // }
-    exit = "inactiveRight";
-  } else {
-    exit = "inactive";
-  }
-
   return (
     <div className="flex flex-col w-full h-full relative">
       <AnimatePresence exitBeforeEnter={false}>
@@ -160,9 +122,9 @@ export default function MobileMenuSide({ sidebarOpen }) {
             layout
             key="menu_intro"
             variants={variant}
-            initial="inactive"
-            animate="active"
-            exit="inactive"
+            initial="hidden"
+            animate="show"
+            exit="hidden"
           >
             <MenuIntro
               handleCloseMenu={handleCloseMenu}
@@ -171,6 +133,8 @@ export default function MobileMenuSide({ sidebarOpen }) {
                   view: "MENU",
                   action: "GO",
                 });
+
+                setMenuItems([{ label: null, items: data?.categories }]);
               }}
             />
           </motion.div>
@@ -181,14 +145,9 @@ export default function MobileMenuSide({ sidebarOpen }) {
             layout
             key="menu"
             variants={variant}
-            initial={action === "GO" ? "inactiveRight" : "inactive"}
-            // initial="inactiveRight"
-            animate="active"
-            // animate={action === "GO" ? "active" : "inactive"}
-            // exit={() => getExitAnimation(menuView)}
-            exit={action === "BACK" ? "inactiveRight" : "inactive"}
-            // exit="inactiveRight"
-            // exit={exit}
+            initial={action === "GO" ? "hiddenRight" : "hidden"}
+            animate="show"
+            exit={action === "GO" ? "hidden" : "hiddenRight"}
           >
             <Menu
               categories={data?.categories}
@@ -206,10 +165,9 @@ export default function MobileMenuSide({ sidebarOpen }) {
             layout
             key="menu_sub_1"
             variants={variant}
-            initial={action === "GO" ? "inactiveRight" : "inactive"}
-            // animate={action === "GO" ? "active" : "inactive"}
-            animate="active"
-            exit={action === "BACK" ? "inactiveRight" : "inactive"}
+            initial={action === "GO" ? "hiddenRight" : "hidden"}
+            animate="show"
+            exit={action === "GO" ? "hidden" : "hiddenRight"}
           >
             <SubMenu
               handleOpenMenu={handleOpenMenu}
@@ -225,9 +183,9 @@ export default function MobileMenuSide({ sidebarOpen }) {
           <motion.div
             key="menu_sub_2"
             variants={variant}
-            initial={action === "GO" ? "inactiveRight" : "inactive"}
-            animate="active"
-            exit="inactiveRight"
+            initial={action === "GO" ? "hiddenRight" : "hidden"}
+            animate="show"
+            exit="hiddenRight"
           >
             <SubMenu
               handleOpenMenu={handleOpenMenu}
