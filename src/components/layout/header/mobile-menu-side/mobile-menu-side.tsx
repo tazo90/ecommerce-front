@@ -8,7 +8,10 @@ import { MenuIntro } from "./menu-intro";
 import { Menu } from "./menu";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
-type MENU_VIEW = "MENU_INTRO" | "MENU" | "MENU_SUB_1" | "MENU_SUB_2" | null;
+type MENU_VIEW = {
+  view: "MENU_INTRO" | "MENU" | "MENU_SUB_1" | "MENU_SUB_2" | null;
+  action: "GO" | "BACK" | null;
+} | null;
 
 const MENUS = ["MENU_INTRO", "MENU", "MENU_SUB_1", "MENU_SUB_2"];
 
@@ -42,8 +45,8 @@ const transition = {
 };
 
 const variant = {
-  // hidden: (origin) =>
-  //   origin === "left" ? { x: "-100%", transition } : { x: "100%", transition },
+  hidden: (origin) =>
+    origin === "left" ? { x: "-100%", transition } : { x: "100%", transition },
   visible: { x: 0, transition },
 };
 
@@ -52,7 +55,7 @@ export default function MobileMenuSide({ sidebarOpen }) {
 
   const [menuItems, setMenuItems] = useState<any>([]);
   const [menuView, setMenuView] = useState<MENU_VIEW>(null);
-  const [isBack, setIsBack] = useState(false);
+  const [isGo, setGo] = useState(false);
 
   const [originMenu, setOriginMenu] = useState("left");
   const [originSubMenu, setOriginSubMenu] = useState("left");
@@ -70,7 +73,10 @@ export default function MobileMenuSide({ sidebarOpen }) {
 
   useEffect(() => {
     if (sidebarOpen) {
-      setMenuView("MENU_INTRO");
+      setMenuView({
+        view: "MENU_INTRO",
+        action: "GO",
+      });
     }
 
     return () => {
@@ -90,14 +96,15 @@ export default function MobileMenuSide({ sidebarOpen }) {
   }
 
   useEffect(() => {
-    // console.log("CHANGE ANIMATION", menuView, isGo);
-    // if (menuView?.action === "BACK") {
-    //   setOriginMenu("right");
-    // } else if (menuView?.action === "GO") {
-    //   setOriginMenu("left");
-    //   controls.start("visible");
-    // }
-  }, [controls, menuView]);
+    console.log("CHANGE ANIMATION", menuView, isGo);
+
+    if (menuView?.action === "BACK") {
+      setOriginMenu("right");
+    } else if (menuView?.action === "GO") {
+      setOriginMenu("left");
+      controls.start("visible");
+    }
+  }, [controls, isGo, menuView]);
 
   const handleOpenMenu = useCallback(
     (item, subItems) => {
@@ -117,51 +124,55 @@ export default function MobileMenuSide({ sidebarOpen }) {
       const view = `MENU_SUB_${stackedMenus.length - 1}`;
 
       setMenuItems(stackedMenus);
-      setMenuView(view);
+      setMenuView({ view: view, action: "GO" });
 
-      console.log("OPEN", isBack);
+      console.log("OPEN", isGo);
 
-      // if (isGo) {
-      //   setOriginMenu("left");
-      //   setOriginSubMenu("right");
-      // } else {
-      //   setOriginMenu("left");
-      //   setOriginSubMenu("right");
-      // }
+      if (isGo) {
+        setOriginMenu("left");
+        setOriginSubMenu("right");
+      } else {
+        setOriginMenu("left");
+        setOriginSubMenu("right");
+      }
 
       // setOriginPrev("left");
 
-      setIsBack(false);
+      setGo(true);
     },
     [menuView]
   );
 
   const handleBackMenu = useCallback(() => {
-    const menuIndex = MENUS.findIndex((menuName) => menuName === menuView);
+    const menuIndex = MENUS.findIndex(
+      (menuName) => menuName === menuView?.view
+    );
     const previousView = MENUS[menuIndex - 1];
     // Remove last element
     const stackedMenus = [...menuItems];
     stackedMenus.splice(menuItems.length - 1, 1);
     setMenuItems(stackedMenus);
-    setMenuView(previousView);
+    setMenuView({ view: previousView, action: "BACK" });
 
-    console.log("BACK", isBack);
+    console.log("BACK", isGo);
 
-    // if (isGo) {
-    //   setOriginMenu("left");
-    //   setOriginSubMenu("right");
-    // } else {
-    //   setOriginMenu("right");
-    //   setOriginSubMenu("left");
-    // }
+    if (isGo) {
+      setOriginMenu("left");
+      setOriginSubMenu("right");
+    } else {
+      setOriginMenu("right");
+      setOriginSubMenu("left");
+    }
 
-    setIsBack(true);
+    setGo(false);
   }, [menuView]);
+
+  const action = menuView?.action;
 
   return (
     <div className="flex flex-col w-full h-full relative">
       <AnimatePresence exitBeforeEnter={false}>
-        {menuView === "MENU_INTRO" && (
+        {menuView?.view === "MENU_INTRO" && (
           <motion.div
             layout
             key="menu_intro"
@@ -174,18 +185,21 @@ export default function MobileMenuSide({ sidebarOpen }) {
             <MenuIntro
               handleCloseMenu={handleCloseMenu}
               handleMenuClick={() => {
-                setMenuView("MENU");
+                setMenuView({
+                  view: "MENU",
+                  action: "GO",
+                });
 
                 setMenuItems([{ label: null, items: data?.categories }]);
                 setOriginMenu("right");
 
-                setIsBack(true);
+                setGo(true);
               }}
             />
           </motion.div>
         )}
 
-        {menuView === "MENU" && (
+        {menuView?.view === "MENU" && (
           <motion.div
             layout
             key="menu"
@@ -210,7 +224,7 @@ export default function MobileMenuSide({ sidebarOpen }) {
           </motion.div>
         )}
 
-        {menuView === "MENU_SUB_1" && (
+        {menuView?.view === "MENU_SUB_1" && (
           <motion.div
             layout
             key="menu_sub_1"
@@ -234,7 +248,7 @@ export default function MobileMenuSide({ sidebarOpen }) {
           </motion.div>
         )}
 
-        {menuView === "MENU_SUB_2" && (
+        {menuView?.view === "MENU_SUB_2" && (
           <motion.div
             key="menu_sub_2"
             variants={variant}
