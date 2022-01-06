@@ -19,7 +19,7 @@ interface BottomNavigationProps {
   top: boolean;
 }
 
-function BottomNavigation({ top }: BottomNavigationProps) {
+function MobileNavigation({ top }: BottomNavigationProps) {
   const dispatch = useDispatch();
   const { drawerView } = useSelector((state) => state.ui);
 
@@ -76,4 +76,4 @@ function BottomNavigation({ top }: BottomNavigationProps) {
   );
 }
 
-export default BottomNavigation;
+export default MobileNavigation;

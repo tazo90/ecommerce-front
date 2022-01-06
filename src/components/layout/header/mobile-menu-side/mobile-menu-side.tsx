@@ -4,23 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { setDrawerView } from "@slices/ui.slice";
 import { setCategories, setCategoryProducts } from "@slices/category.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
+import { fadeInSide } from "@utils/motion/fade-in-side";
 import { SubMenu } from "./sub-menu";
 import { MenuIntro } from "./menu-intro";
 import { Menu } from "./menu";
-
-const transition = {
-  type: "tween",
-  duration: 0.5,
-};
-
-const variants = {
-  left: { x: "-100%", transition },
-  right: { x: "100%", transition },
-  animate: {
-    x: 0,
-    transition,
-  },
-};
 
 const menus = [
   {
@@ -114,7 +101,7 @@ const MobileMenuSide = ({ sidebarOpen }) => {
           <motion.div
             className="w-full h-full absolute"
             key={name}
-            variants={variants}
+            variants={fadeInSide(0.5)}
             initial={activeMenu === i ? "left" : "right"}
             animate={
               activeMenu === i ? "animate" : i > activeMenu ? "right" : "left"
