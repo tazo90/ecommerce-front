@@ -15,7 +15,6 @@ export function Menu({
         handleCloseMenu={handleCloseMenu}
         handleBackMenu={handleBackMenu}
       />
-      menu
       {categories?.map((category) => {
         const categoryItems =
           category.subCategories || Object.values(category.products);

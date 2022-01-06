@@ -1,16 +1,16 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
 import { setDrawerView } from "@slices/ui.slice";
 import { setCategories, setCategoryProducts } from "@slices/category.slice";
 import { useCategoriesQuery } from "@framework/category/get-all-categories";
 import { SubMenu } from "./sub-menu";
 import { MenuIntro } from "./menu-intro";
 import { Menu } from "./menu";
-import { AnimatePresence, motion } from "framer-motion";
 
 const transition = {
   type: "tween",
-  duration: 1,
+  duration: 0.5,
 };
 
 const variants = {
@@ -41,18 +41,11 @@ const menus = [
   },
 ];
 
-const initial = {
-  index: 0,
-  curr: null,
-  prev: null,
-};
-
 const MobileMenuSide = ({ sidebarOpen }) => {
   const dispatch = useDispatch();
 
   const [menuItems, setMenuItems] = useState<any>([]);
-  const [activeMenu, setActiveMenu] = useState(initial);
-  const [direction, setDirection] = useState(1);
+  const [activeMenu, setActiveMenu] = useState(0);
 
   // TODO: Move it to containers/categories-block
   const { data, isLoading, error } = useCategoriesQuery();
@@ -60,7 +53,7 @@ const MobileMenuSide = ({ sidebarOpen }) => {
   useEffect(() => {
     return () => {
       setMenuItems([]);
-      setActiveMenu(initial);
+      setActiveMenu(0);
     };
   }, [sidebarOpen]);
 
@@ -76,26 +69,19 @@ const MobileMenuSide = ({ sidebarOpen }) => {
   const handleClick = useCallback(
     (direction, item, subItems) => {
       setActiveMenu((prevState) => {
-        if (prevState.index >= 0 || prevState.index <= menus.length - 1) {
-          const menuIndex = prevState.index + direction;
-          return {
-            index: menuIndex,
-            curr: null,
-            prev: null,
-          };
+        if (prevState >= 0 || prevState <= menus.length - 1) {
+          return prevState + direction;
         }
         return activeMenu;
       });
 
-      setDirection(direction);
-
-      // Set menus
       if (direction > 0) {
-        if (menus[activeMenu.index].name === "MENU_INTRO") {
+        // go to next menu
+        if (menus[activeMenu].name === "MENU_INTRO") {
           setMenuItems([{ label: null, items: data?.categories }]);
         }
 
-        if (menus[activeMenu.index].name !== "MENU_INTRO" && item && subItems) {
+        if (menus[activeMenu].name !== "MENU_INTRO" && item && subItems) {
           const currentMenu = {
             label: item.name,
             items: subItems,
@@ -106,32 +92,20 @@ const MobileMenuSide = ({ sidebarOpen }) => {
             stackedMenus = [currentMenu];
           } else {
             stackedMenus = [...menuItems];
-            stackedMenus.push(currentMenu);
+            stackedMenus[activeMenu] = currentMenu;
           }
 
           setMenuItems(stackedMenus);
         }
-      } else if (direction < 0) {
-        // Remove last element
+      } else {
+        // back to prev menu
         const stackedMenus = [...menuItems];
-        stackedMenus.splice(menuItems.length - 1, 1);
+        stackedMenus.splice(activeMenu, 1);
         setMenuItems(stackedMenus);
       }
     },
     [menuItems]
   );
-
-  useEffect(() => {
-    if (menuItems?.length >= 1) {
-      setActiveMenu({
-        index: activeMenu.index,
-        curr: menuItems?.length >= 1 ? menuItems[activeMenu.index - 1] : null,
-        prev: menuItems?.length >= 2 ? menuItems[activeMenu.index - 2] : null,
-      });
-    }
-  }, [menuItems]);
-
-  console.log("ACTIVE MENU", activeMenu);
 
   return (
     <div className="flex flex-col w-full h-full relative">
@@ -141,18 +115,15 @@ const MobileMenuSide = ({ sidebarOpen }) => {
             className="w-full h-full absolute"
             key={name}
             variants={variants}
-            initial={activeMenu.index === i ? "left" : "right"}
+            initial={activeMenu === i ? "left" : "right"}
             animate={
-              activeMenu.index === i
-                ? "animate"
-                : i > activeMenu.index
-                ? "right"
-                : "left"
+              activeMenu === i ? "animate" : i > activeMenu ? "right" : "left"
             }
           >
             <Component
+              index={i}
               categories={data?.categories}
-              activeMenu={activeMenu}
+              menuItems={menuItems}
               handleOpenMenu={handleClick}
               handleBackMenu={handleClick}
               handleCloseMenu={handleCloseMenu}

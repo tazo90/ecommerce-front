@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import cn from "classnames";
@@ -8,8 +8,9 @@ import lowerCase from "lodash/lowerCase";
 import { MenuItem } from "./menu-item";
 import { MenuHeader } from "./menu-header";
 
-function _SubMenu({
-  activeMenu,
+export function SubMenu({
+  index,
+  menuItems,
   handleOpenMenu,
   handleBackMenu,
   handleCloseMenu,
@@ -32,15 +33,17 @@ function _SubMenu({
     router.push(`/products/${productSlug}-${product.id}`);
   }
 
+  const menu = menuItems[index - 1];
+
   return (
     <div className="flex flex-col w-full h-full pb-6">
       <MenuHeader
-        activeMenu={activeMenu}
+        index={index}
+        menuItems={menuItems}
         handleCloseMenu={handleCloseMenu}
         handleBackMenu={handleBackMenu}
       />
-      submenu
-      {activeMenu?.curr?.items?.map((item) => {
+      {menu?.items?.map((item) => {
         const isProduct = item.price !== undefined;
 
         return (
@@ -74,5 +77,3 @@ function _SubMenu({
     </div>
   );
 }
-
-export const SubMenu = memo(_SubMenu);
