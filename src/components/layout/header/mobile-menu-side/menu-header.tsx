@@ -17,7 +17,7 @@ export function MenuHeader({
 
   return (
     <>
-      <div className="w-full h-14 border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 ">
+      <div className="w-full h-12 border-gray-300 border-b-2 flex justify-between items-center relative flex-shrink-0 overflow-hidden">
         {handleBackMenu && (
           <div
             className="flex items-center px-4 py-4 h-14 border-gray-300 border-b-2"
@@ -52,16 +52,9 @@ export function MenuHeader({
       )}
 
       {showDelivery && (
-        <div className="flex items-center justify-between px-2 py-2 border-gray-300 border-b-2">
-          <div className="flex border-gray-300 border-r-2 pr-2">
-            <Image
-              src="https://kfc.pl/assets/img/menu/motor.png"
-              width={30}
-              height={30}
-              quality={100}
-              className="object-cover"
-            />
-            <span>Dostawa</span>
+        <div className="flex items-center justify-center w-full py-2 border-gray-300 border-b-2 font-medium bg-green">
+          <div className="flex justify-center w-1/2 border-gray-300 border-r-2">
+            <span className="pr-1">Delivery</span>
             <Image
               src="https://kfc.pl/assets/img/menu/clock30.svg"
               width={30}
@@ -70,15 +63,8 @@ export function MenuHeader({
               className="object-cover"
             />
           </div>
-          <div className="flex pl-2 pr-2">
-            <Image
-              src="https://kfc.pl/assets/img/menu/hand.png"
-              width={30}
-              height={30}
-              quality={100}
-              className="object-cover"
-            />
-            <span>Restauracja</span>
+          <div className="flex justify-center w-1/2">
+            <span className="pr-1">Pick Up</span>
             <Image
               src="https://kfc.pl/assets/img/menu/clock5.svg"
               width={30}

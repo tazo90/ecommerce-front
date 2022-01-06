@@ -12,6 +12,7 @@ export function Menu({
   return (
     <div className="flex flex-col w-full h-full">
       <MenuHeader
+        showDelivery={true}
         handleCloseMenu={handleCloseMenu}
         handleBackMenu={handleBackMenu}
       />

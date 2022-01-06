@@ -95,7 +95,7 @@ const MobileMenuSide = ({ sidebarOpen }) => {
   );
 
   return (
-    <div className="flex flex-col w-full h-full relative">
+    <div className="flex flex-col w-full h-full relative overflow-x-hidden">
       <AnimatePresence exitBeforeEnter={false}>
         {menus.map(({ name, Component }, i) => (
           <motion.div
