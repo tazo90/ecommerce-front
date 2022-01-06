@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "@components/ui/link";
 import { MenuHeader } from "./menu-header";
 
-export function MenuIntro({ handleCloseMenu, handleMenuClick }) {
+export function MenuIntro({ handleOpenMenu, handleCloseMenu }) {
   const menuIntro = [
     {
       name: "MENU",
       img: "/assets/images/menu/menu.png",
       url: "/products",
-      onClick: () => handleMenuClick(),
+      onClick: handleOpenMenu,
     },
     {
       name: "KUPONY",
@@ -37,7 +37,7 @@ export function MenuIntro({ handleCloseMenu, handleMenuClick }) {
     "flex items-center justify-between my-3 mx-4 px-4 h-80 bg-gray-200 rounded-lg font-medium text-sm";
 
   return (
-    <div className="flex flex-col justify-between absolute w-full h-full">
+    <div className="flex flex-col justify-between w-full h-full">
       <MenuHeader handleCloseMenu={handleCloseMenu} />
 
       {menuIntro.map((item) => {
