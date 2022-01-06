@@ -34,7 +34,7 @@ export function SubMenu({
   }
 
   return (
-    <div className="flex flex-col absolute w-full h-full pb-6">
+    <div className="flex flex-col w-full h-full pb-6">
       <MenuHeader
         currentMenu={currentMenu}
         previousMenu={previousMenu}
