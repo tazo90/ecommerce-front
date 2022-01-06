@@ -16,7 +16,7 @@ export function MenuItem({
       className={`flex justify-between items-center w-full ${
         isProduct ? "pl-4 pr-2" : "pr-4 pl-6"
       }`}
-      onClick={() => handleOpenMenu(item, subItems)}
+      onClick={() => handleOpenMenu(1, item, subItems)}
     >
       {isProduct ? (
         <div className="flex flex-col justify-between w-full h-full">

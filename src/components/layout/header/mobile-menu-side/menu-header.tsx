@@ -6,10 +6,9 @@ import { IoClose } from "react-icons/io5";
 import capitalize from "lodash/capitalize";
 
 export function MenuHeader({
+  activeMenu,
   handleCloseMenu,
   handleBackMenu,
-  previousMenu,
-  currentMenu,
   showDelivery = false,
 }) {
   return (
@@ -18,20 +17,20 @@ export function MenuHeader({
         {handleBackMenu && (
           <div
             className="flex items-center px-4 py-4 h-14 border-gray-300 border-b-2"
-            onClick={() => handleBackMenu()}
+            onClick={() => handleBackMenu(-1)}
           >
             <>
               <IoIosArrowBack className="text-[20px]" />
-              {previousMenu && (
+              {activeMenu?.prev && (
                 <span className="pl-2 font-bold">
-                  {capitalize(previousMenu.label) || "Main Menu"}
+                  {capitalize(activeMenu.prev.label) || "Main Menu"}
                 </span>
               )}
             </>
           </div>
         )}
 
-        {!previousMenu && <Logo className="pl-4" />}
+        {!activeMenu?.prev && <Logo className="pl-4" />}
 
         <button
           className="flex text-2xl items-center justify-center text-gray-500 px-4 md:px-5 py-6 lg:py-8 focus:outline-none transition-opacity hover:opacity-60"
@@ -42,9 +41,9 @@ export function MenuHeader({
         </button>
       </div>
 
-      {previousMenu && (
+      {activeMenu?.prev && (
         <div className="uppercase font-bold px-6 pt-4 pb-2 text-lg">
-          {currentMenu?.label}
+          {activeMenu.current?.label}
         </div>
       )}
 

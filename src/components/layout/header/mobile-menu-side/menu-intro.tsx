@@ -9,7 +9,7 @@ export function MenuIntro({ handleOpenMenu, handleCloseMenu }) {
       name: "MENU",
       img: "/assets/images/menu/menu.png",
       url: "/products",
-      onClick: handleOpenMenu,
+      onClick: () => handleOpenMenu(1),
     },
     {
       name: "KUPONY",

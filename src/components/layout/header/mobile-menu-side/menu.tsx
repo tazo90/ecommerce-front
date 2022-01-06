@@ -5,8 +5,6 @@ import { MenuItem } from "./menu-item";
 
 export function Menu({
   categories,
-  currentMenu,
-  previousMenu,
   handleOpenMenu,
   handleBackMenu,
   handleCloseMenu,
@@ -14,12 +12,10 @@ export function Menu({
   return (
     <div className="flex flex-col w-full h-full">
       <MenuHeader
-        currentMenu={currentMenu}
-        previousMenu={previousMenu}
         handleCloseMenu={handleCloseMenu}
         handleBackMenu={handleBackMenu}
       />
-
+      menu
       {categories?.map((category) => {
         const categoryItems =
           category.subCategories || Object.values(category.products);
