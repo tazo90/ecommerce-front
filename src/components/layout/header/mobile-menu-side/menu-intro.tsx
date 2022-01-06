@@ -40,7 +40,7 @@ export function MenuIntro({ handleOpenMenu, handleCloseMenu }) {
     <div className="flex flex-col justify-between w-full h-full">
       <MenuHeader handleCloseMenu={handleCloseMenu} />
 
-      {menuIntro.map((item) => {
+      {menuIntro.map((item, i) => {
         const content = (
           <>
             {item.name}
@@ -57,14 +57,14 @@ export function MenuIntro({ handleOpenMenu, handleCloseMenu }) {
 
         if (item.onClick) {
           return (
-            <div onClick={item.onClick} className={boxClasses}>
+            <div key={i} onClick={item.onClick} className={boxClasses}>
               {content}
             </div>
           );
         }
 
         return (
-          <Link href={item.url} className={boxClasses}>
+          <Link key={i} href={item.url} className={boxClasses}>
             {content}
           </Link>
         );
