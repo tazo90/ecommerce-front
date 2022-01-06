@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import cn from "classnames";
+import find from "lodash/find";
 import { useRouter } from "next/router";
 import { setDrawerView } from "@slices/ui.slice";
 import lowerCase from "lodash/lowerCase";
@@ -33,6 +34,10 @@ export function SubMenu({
     router.push(`/products/${productSlug}-${product.id}`);
   }
 
+  function getItemPicture(item) {
+    return item.img ?? find(item.media, { roleId: "IMG" })?.url ?? "";
+  }
+
   const menu = menuItems[index - 1];
 
   return (
@@ -45,6 +50,11 @@ export function SubMenu({
       />
       {menu?.items?.map((item) => {
         const isProduct = item.price !== undefined;
+        const imgSrc = getItemPicture(item);
+
+        if (item.type && item.type !== "BLOCK") {
+          return null;
+        }
 
         return (
           <div
@@ -55,15 +65,17 @@ export function SubMenu({
             onClick={() => handleProductClick(item)}
             key={item.id}
           >
-            <Image
-              src={item.img ?? item.media[0].url}
-              alt={item.name}
-              width={120}
-              height={120}
-              quality={100}
-              priority
-              className="object-contain"
-            />
+            {imgSrc && (
+              <Image
+                src={imgSrc}
+                alt={item.name}
+                width={120}
+                height={120}
+                quality={100}
+                priority
+                className="object-contain"
+              />
+            )}
             <MenuItem
               key={item.id}
               item={item}
