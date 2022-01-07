@@ -2,13 +2,19 @@ import { ROUTES } from "@utils/routes";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import cn from "classnames";
-import { IoIosHand, IoIosCar } from "react-icons/io";
+import { IoIosHand, IoIosCar, IoIosArrowBack } from "react-icons/io";
 
 const storeMenu = [
   {
+    slug: ROUTES.HOME,
+    name: "",
+    className: "rounded-l-lg w-2/12",
+    icon: <IoIosArrowBack className="w-5 h-5" />,
+  },
+  {
     slug: ROUTES.STORE_LOCATOR,
     name: "Pick Up",
-    className: "rounded-l-lg",
+    className: "",
     icon: <IoIosHand className="w-5 h-5" />,
   },
   {
@@ -25,21 +31,21 @@ export default function StoreNav() {
   const mainPath = `/${newPathname[0]}`;
 
   return (
-    <nav className="flex justify-center md:w-2/6 2xl:w-4/12 md:px-8 lg:px-12 xl:px-16 2xl:px-20 pb-2 md:pb-0">
+    <nav className="flex items-center justify-center md:w-2/6 2xl:w-4/12 md:px-8 lg:px-12 xl:px-16 2xl:px-20 md:pb-0 w-full">
       {storeMenu.map((item) => {
         const menuPathname = item.slug.split("/").slice(2, 3);
         const menuPath = `/${menuPathname[0]}`;
-        const isActive = mainPath === menuPath;
+        const isActive = mainPath === menuPath && item.slug !== ROUTES.HOME;
 
         return (
           <Link key={item.slug} href={item.slug}>
             <a
               className={cn(
                 item.className,
-                "flex items-center cursor-pointer text-sm lg:text-base text-heading py-3.5 px-4 lg:px-5 mb-2",
+                "flex items-center cursor-pointer text-sm lg:text-base text-heading py-3 px-4 lg:px-5 mb-2 w-1/2 border border-slate-200",
                 {
                   "font-semibold bg-green": isActive,
-                  "font-normal border-2 border-slate-200": !isActive,
+                  "font-normal": !isActive,
                 }
               )}
             >
