@@ -28,7 +28,7 @@ export function MenuItem({
         </div>
       ) : (
         <>
-          <div className="text-sm font-semibold">{name}</div>
+          <div className="text-md font-semibold">{name}</div>
           <IoIosArrowForward />
         </>
       )}

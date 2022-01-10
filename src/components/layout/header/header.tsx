@@ -1,19 +1,15 @@
-import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import dynamic from 'next/dynamic';
-import { SearchIcon } from '@components/icons';
-import HeaderMenu from './header-menu';
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import dynamic from "next/dynamic";
+import { SearchIcon } from "@components/icons";
+import HeaderMenu from "./header-menu";
 import { siteSettings } from "@settings/site.settings";
-import Logo from '@components/ui/logo';
-import { 
-  setModalView, 
-  setDrawerView,
-  openSearch,
-} from '@slices/ui.slice';
+import Logo from "@components/ui/logo";
+import { setModalView, setDrawerView, openSearch } from "@slices/ui.slice";
 
-const CartButton = dynamic(() => import('@components/cart/cart-button'), {
-  ssr: false
-})
+const CartButton = dynamic(() => import("@components/cart/cart-button"), {
+  ssr: false,
+});
 
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 
@@ -57,7 +53,7 @@ function Header() {
             data={siteHeader.menu}
             className="hidden lg:flex md:ms-6 xl:ms-10"
           />
-          
+
           <div className="hidden md:flex justify-end items-center space-s-6 lg:space-s-5 xl:space-s-8 2xl:space-s-10 ms-auto flex-shrink-0">
             <button
               className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none transform"
