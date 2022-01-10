@@ -8,7 +8,7 @@ const storeMenu = [
   {
     slug: ROUTES.HOME,
     name: "",
-    className: "rounded-l-lg w-2/12",
+    className: "w-[15%]",
     icon: <IoIosArrowBack className="w-5 h-5" />,
   },
   {
@@ -20,7 +20,7 @@ const storeMenu = [
   {
     slug: ROUTES.DELIVERY,
     name: "Delivery",
-    className: "rounded-r-lg",
+    className: "",
     icon: <IoIosCar className="w-5 h-5" />,
   },
 ];
@@ -42,7 +42,7 @@ export default function StoreNav() {
             <a
               className={cn(
                 item.className,
-                "flex items-center cursor-pointer text-sm lg:text-base text-heading py-3 px-4 lg:px-5 mb-2 w-1/2 border border-slate-200",
+                "flex items-center cursor-pointer text-sm lg:text-base text-heading py-3 px-4 lg:px-5 w-1/2 border border-slate-200",
                 {
                   "font-semibold bg-green": isActive,
                   "font-normal": !isActive,
